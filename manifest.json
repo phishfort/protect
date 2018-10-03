@@ -1,8 +1,8 @@
 {
   "manifest_version": 2,
   "name": "PhishFort | Crypto",
-  "description": "Protect yourself from phishing attacks.",
-  "version": "0.1",
+  "description": "Protect against phishing attacks.",
+  "version": "0.0.1",
   "author": "PhishFort",
   "browser_action": {
     "default_icon": "images/tab-icon.png",
@@ -15,11 +15,16 @@
   },
   "background": {
     "scripts": [
+      "js/jquery-3.3.1.min.js",
       "js/background.js"
-    ]
+    ],
+    "persistent": false
   },
+  "web_accessible_resources": [
+    "warning.html"
+  ],
   "content_security_policy": "script-src 'self' https://www.google.com https://www.gstatic.com; object-src 'self'",
   "permissions": [
-    "activeTab"
+    "tabs"
   ]
 }

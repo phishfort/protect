@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="css/bootstrap.min.css">
   <link rel="stylesheet" href="css/font-awesome.min.css">
   <link rel="stylesheet" href="css/style.css">
-  <title>Plugin</title>
+  <title>PhishFort | Crypto</title>
 </head>
 
 <body>
@@ -39,8 +39,9 @@
       <div class="container">
         <div class="siteInfo">
           <div class="text-center">
-            <div class="statusBar status-safe">
-              <span><label>Status:</label>Safe</span>
+            <div class="statusBar">
+              <i id="statusIndicator" class="fa fa-circle fa-lg"></i>
+              <span id="statusIcon">Status:</span><span id="statusPhrase">Unknown</span>
             </div>
             <small><a href="indicators.html">What does this status mean?</a></small>
           </div>
@@ -58,6 +59,7 @@
     </footer>
   </div>
 
+  <script src="js/index.js"></script>
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
   <script src="js/jquery-3.3.1.min.js"></script>
   <script src="js/popper.min.js"></script>

@@ -160,6 +160,9 @@ h1,h2,h3,h4,h5,h6,p{
     justify-content: center;
     align-items: center;
 }
+.warningSec {
+    height: 90vh;
+}
 .warningInfo {
     text-align: center;
 }
@@ -216,7 +219,6 @@ h1,h2,h3,h4,h5,h6,p{
 .statusBar span {
     font-size: 21px;
     color: #323232;
-    padding-left: 26px;
 }
 .statusBar span:before {
     content: "";
@@ -245,14 +247,18 @@ h1,h2,h3,h4,h5,h6,p{
     margin-bottom: 0;
 }
 
-.status-safe span:before {
-    background-color: #0071bc;
+.status-safe {
+    color: #0071bc;
 }
-.status-unknown span:before {
-    background-color: grey;
+.status-unknown {
+    color: grey;
 }
-.status-dangerous span:before {
-    background-color: red;
+.status-dangerous {
+    color: red;
+}
+
+.fa-lg {
+    vertical-align: 0;
 }
 
 .linkSection > h2 {

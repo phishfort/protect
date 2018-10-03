@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="css/font-awesome.min.css">
   <link rel="stylesheet" href="css/style.css">
 
-  <title>Plugin</title>
+  <title>PhishFort | Crypto</title>
 </head>
 
 <body>
@@ -44,7 +44,7 @@
         <div class="mb-3">
           <h3>Report Phishing</h3>
         </div>
-        <form id="reportPhishingForm">
+        <form>
           <div class="form-group">
             <label for="exampleFormControlInput1">Malicious Site</label>
             <input type="url" class="form-control" id="maliciousSite" placeholder="e.g. https://www.attacker.com">
@@ -60,10 +60,10 @@
             </datalist>
           </div>
           <div class="form-group">
-            <label for="comment">Comment</label>
-            <textarea class="form-control" id="comment" rows="3"></textarea>
+            <label for="comment">Comment (Optional)</label>
+            <textarea autofocus class="form-control" style="resize: none;" id="comment" rows="3"></textarea>
           </div>
-          
+
           <button id="reportButton" class="btn btn-secondary pull-right g-recaptcha" data-sitekey="6LcZBHMUAAAAAG9xAi0mmd0LFF-2upIVrtP4eZSG"
             data-callback="recaptcha_callback" data-error-callback="recaptcha_error" data-badge="bottomleft">
             Report
@@ -76,13 +76,13 @@
         </form>
       </div>
     </div>
-    <footer class="page-footer font-small cyan darken-3 mt-3">
+    <footer class="page-footer font-small cyan darken-3 mt-5 mb-3">
       <div class="footer-copyright text-center py-3">Copyright © 2018
         <a href="https://www.phishfort.com" target="_blank">PhishFort</a>
       </div>
     </footer>
 
-    <script src="js/main.js"></script>
+    <script src="js/report.js"></script>
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src='https://www.google.com/recaptcha/api.js' async defer></script>
     <script src="js/jquery-3.3.1.min.js"></script>
