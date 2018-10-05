@@ -1,2 +1,2 @@
-# chrome-crypto-plugin
-PhishFort Anti-Phishing Chrome Plugin
+# PhishFort | Protect
+Anti-Phishing Chrome Plugin
