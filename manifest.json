@@ -1,13 +1,13 @@
 {
   "manifest_version": 2,
-  "name": "PhishFort | Crypto",
-  "description": "Protect against phishing attacks.",
-  "version": "0.0.1",
+  "name": "PhishFort | Protect",
+  "description": "Protect against phishing attacks targeting crypto users.",
+  "version": "0.0.2",
   "author": "PhishFort",
   "browser_action": {
     "default_icon": "images/tab-icon.png",
     "default_icon": "images/tab-icon.png",
-    "default_title": "PhishFort | Crypto",
+    "default_title": "PhishFort | Protect",
     "default_popup": "index.html"
   },
   "icons": {
