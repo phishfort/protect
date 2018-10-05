@@ -1,8 +1,10 @@
 'use strict';
 
+const background = chrome.extension.getBackgroundPage();
 
 let reportCurrent = document.getElementById("reportCurrent");
 let maliciousSite = document.getElementById("maliciousSite");
+let list = document.getElementById("targets");
 
 reportCurrent.onclick = function (element) {
   chrome.tabs.query({ currentWindow: true, active: true }, function (tabs) {
@@ -10,11 +12,19 @@ reportCurrent.onclick = function (element) {
   });
 };
 
+background.whitelist.forEach(function (item) {
+  var option = document.createElement('option');
+  option.value = item;
+  list.appendChild(option);
+});
+
 function recaptchaCallback(data) {
   var url = document.getElementById("maliciousSite").value;
   var domain = getDomainFromURL(url);
 
-  $.post("https://us-central1-plugin-recaptcha.cloudfunctions.net/validate-captcha", { url: url, malicious: domain, target: document.getElementById("target").value, comment: document.getElementById("comment").value, captcha: data },
+  document.getElementById("reportButton").classList.add("disabled");
+
+  $.post("https://us-central1-plugin-recaptcha.cloudfunctions.net/validate-captcha", { url: url, malicious: domain, target: getDomainFromURL(document.getElementById("target").value), comment: document.getElementById("comment").value, captcha: data },
     function (returnedData) {
       window.location.replace("success.html");
     }).fail(function (xhr, status, error) {
