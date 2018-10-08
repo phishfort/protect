@@ -27,7 +27,8 @@ function recaptchaCallback(data) {
   $.post("https://us-central1-plugin-recaptcha.cloudfunctions.net/validate-captcha", { url: url, malicious: domain, target: getDomainFromURL(document.getElementById("target").value), comment: document.getElementById("comment").value, captcha: data },
     function (returnedData) {
       window.location.replace("success.html");
-    }).fail(function (xhr, status, error) {
+    })
+    .fail(function (xhr, status, error) {
       recaptchaError();
     });
 }
@@ -37,7 +38,13 @@ function recaptchaError() {
 };
 
 function getDomainFromURL(url) {
-  let domain = (new URL(url).hostname),
+  if (url.startsWith("http://")) {
+    url = url.replace("http://", "");
+  } else if (url.startsWith("https://")) {
+    url = url.replace("https://", "");
+  }
+
+  let domain = url,
     splitArr = domain.split('.'),
     arrLen = splitArr.length;
 
@@ -48,5 +55,6 @@ function getDomainFromURL(url) {
       domain = splitArr[arrLen - 3] + '.' + domain;
     }
   }
+
   return domain;
 }
