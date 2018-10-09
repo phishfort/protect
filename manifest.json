@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "PhishFort | Protect",
   "description": "Protect against phishing attacks targeting crypto users.",
-  "version": "0.0.2.1",
+  "version": "0.0.2.2",
   "author": "PhishFort",
   "browser_action": {
     "default_icon": "images/tab-icon.png",

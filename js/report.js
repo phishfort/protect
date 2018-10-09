@@ -44,6 +44,10 @@ function getDomainFromURL(url) {
     url = url.replace("https://", "");
   }
 
+  if(url.indexOf("/") > -1) {
+    url = url.split("/")[0];
+  }
+
   let domain = url,
     splitArr = domain.split('.'),
     arrLen = splitArr.length;
