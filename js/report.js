@@ -20,11 +20,11 @@ background.whitelist.forEach(function (item) {
 
 function recaptchaCallback(data) {
   var url = document.getElementById("maliciousSite").value;
-  var domain = getDomainFromURL(url);
+  var domain = getDNSNameFromURL(url);
 
   document.getElementById("reportButton").classList.add("disabled");
 
-  $.post("https://us-central1-plugin-recaptcha.cloudfunctions.net/validate-captcha", { url: url, malicious: domain, target: getDomainFromURL(document.getElementById("target").value), comment: document.getElementById("comment").value, captcha: data },
+  $.post("https://us-central1-plugin-recaptcha.cloudfunctions.net/validate-captcha", { url: url, malicious: domain, target: getDNSNameFromURL(document.getElementById("target").value), comment: document.getElementById("comment").value, captcha: data },
     function (returnedData) {
       window.location.replace("success.html");
     })
@@ -37,28 +37,18 @@ function recaptchaError() {
   window.location.replace("error.html");
 };
 
-function getDomainFromURL(url) {
+function getDNSNameFromURL(url) {
   if (url.startsWith("http://")) {
     url = url.replace("http://", "");
   } else if (url.startsWith("https://")) {
     url = url.replace("https://", "");
-  }
+  } 
 
   if(url.indexOf("/") > -1) {
     url = url.split("/")[0];
   }
 
-  let domain = url,
-    splitArr = domain.split('.'),
-    arrLen = splitArr.length;
-
-  if (arrLen > 2) {
-    domain = splitArr[arrLen - 2] + '.' + splitArr[arrLen - 1];
-    // Check for Country Code Top Level Domain (ccTLD) (e.g. ".co.uk")
-    if (((splitArr[arrLen - 2].length == 2) || (splitArr[arrLen - 2].length == 3)) && splitArr[arrLen - 1].length == 2) {
-      domain = splitArr[arrLen - 3] + '.' + domain;
-    }
-  }
+  let domain = url;
 
   return domain;
 }
