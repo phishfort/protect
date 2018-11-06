@@ -68,14 +68,14 @@ function checkMatch(array, url) {
     splitArr = domain.split('.'),
     arrLen = splitArr.length;
 
-    /*
+    
   if (arrLen > 2) {
     domain = splitArr[arrLen - 2] + '.' + splitArr[arrLen - 1];
     // Check for Country Code Top Level Domain (ccTLD) (e.g. ".co.uk")
     if (((splitArr[arrLen - 2].length == 2) || (splitArr[arrLen - 2].length == 3)) && splitArr[arrLen - 1].length == 2) {
       domain = splitArr[arrLen - 3] + '.' + domain;
     }
-  }*/
+  }
 
   let match = false;
   array.forEach(element => {
