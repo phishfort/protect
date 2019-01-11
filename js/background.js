@@ -14,8 +14,6 @@ setInterval(function () {
 updateWhitelist();
 setInterval(function () {
   updateWhitelist();
-
-  // Reset the domains that can be bypassed every hour
   bypassDomains = [];
 }, 24 * 60 * 60 * 1000);
 
