@@ -1,30 +1,26 @@
 'use strict';
 
-var blacklist, whitelist;
+const browser = window.msBrowser || window.browser || window.chrome;
+const tabs = {};
+let blacklist, whitelist;
+let bypassWarning = false;
+let bypassDomains = [];
 
 updateBlacklist();
-updateWhitelist();
-
-// Update blacklist every 5 minutes
 setInterval(function () {
   updateBlacklist();
 }, 5 * 60 * 1000);
 
-// Update whitelist every 24 hours
+updateWhitelist();
 setInterval(function () {
   updateWhitelist();
+
+  // Reset the domains that can be bypassed every hour
+  bypassDomains = [];
 }, 24 * 60 * 60 * 1000);
 
-chrome.browserAction.setBadgeText({ text: ' ' });
-chrome.browserAction.setBadgeBackgroundColor({ color: '#969696' });
-
-chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
-  checkSafety(tabId);
-});
-
-chrome.tabs.onCreated.addListener(function (tab) {
-  checkSafety(tab.id);
-});
+browser.browserAction.setBadgeText({ text: ' ' });
+browser.browserAction.setBadgeBackgroundColor({ color: '#969696' });
 
 function updateBlacklist() {
   $.getJSON("https://raw.githubusercontent.com/phishfort/phishfort-lists/master/blacklists/domains.json", function (data) {
@@ -38,51 +34,74 @@ function updateWhitelist() {
   });
 }
 
-function checkSafety(tabId) {
-  if (typeof tabId === 'undefined') {
-    return;
-  }
+var result = {};
+browser.webRequest.onBeforeRequest.addListener(
+  (request) => {
+    if (request.tabId >= 0) {
+      let isWarningPage = request.url.startsWith(browser.extension.getURL("../warning.html"));
+      let domain = getDomainFromURL(request.url);
 
-  var result = {};
-  chrome.tabs.get(tabId, function (tab) {
-    if (checkMatch(blacklist, tab.url)) {
-      // Blacklisted
-      chrome.tabs.update(tabId, { url: "../warning.html" });
-      chrome.browserAction.setBadgeBackgroundColor({ tabId: tabId, color: '#ff0400' });
-      result = { safety: "Dangerous", color: '#ff0400' }
-    } else if (checkMatch(whitelist, tab.url)) {
-      // Whitelisted
-      chrome.browserAction.setBadgeBackgroundColor({ tabId: tabId, color: '#0071bc' });
-      result = { safety: "Safe", color: '#0071bc' }
-    } else {
-      // Unknown
-      chrome.browserAction.setBadgeBackgroundColor({ tabId: tabId, color: '#969696' });
-      result = { safety: "Unknown", color: '#969696' }
+      if (domainInArray(domain, whitelist)) {
+        tabs[request.tabId] = { state: "safe" };
+      } else if (domainInArray(domain, blacklist) || bypassDomains.includes(domain)) {
+        tabs[request.tabId] = { state: "dangerous" }
+        tabs[request.tabId].url = request.url;
+        if (!bypassDomains.includes(domain)) {
+          return {
+            redirectUrl: browser.extension.getURL("../warning.html")
+          }
+        }
+      } else if (isWarningPage) {
+        if (!tabs[request.tabId].state) {
+          tabs[request.tabId].state = "dangerous";
+        }
+      } else {
+        tabs[request.tabId] = { state: "unknown" };
+      }
     }
-    chrome.runtime.sendMessage(result, function (response) { });
-  })
-}
+  }, {
+    urls: ['<all_urls>'], types: ['main_frame']
+  }, ['blocking', 'requestBody']);
 
-function checkMatch(array, url) {
-  let domain = (new URL(url).hostname),
-    splitArr = domain.split('.'),
-    arrLen = splitArr.length;
-
-    
-  if (arrLen > 2) {
-    domain = splitArr[arrLen - 2] + '.' + splitArr[arrLen - 1];
-    // Check for Country Code Top Level Domain (ccTLD) (e.g. ".co.uk")
-    if (((splitArr[arrLen - 2].length == 2) || (splitArr[arrLen - 2].length == 3)) && splitArr[arrLen - 1].length == 2) {
-      domain = splitArr[arrLen - 3] + '.' + domain;
-    }
+browser.runtime.onMessage.addListener((request) => {
+  if (request.bypassDomain) {
+    browser.tabs.query({ active: true }, function (tab) {
+      bypassDomains.push(getDomainFromURL(tabs[tab[0].id].url));
+      chrome.tabs.update(tab[0].id, { url: tabs[tab[0].id].url });
+    });
   }
+});
 
-  let match = false;
-  array.forEach(element => {
-    if (domain.endsWith(element) && domain.length <= element.length) {
-      match = true;
-      return;
+browser.tabs.onCreated.addListener(function (tabId, changeInfo, tab) {
+  updateIcon();
+});
+
+browser.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
+  updateIcon();
+});
+
+browser.tabs.onCreated.addListener(function (tab) {
+  updateIcon();
+});
+
+function updateIcon() {
+  browser.tabs.query({ active: true }, function (tab) {
+    if (tabs[tab[0].id] == null || tabs[tab[0].id].state === "unknown") {
+      browser.browserAction.setBadgeBackgroundColor({ tabId: tab[0].id, color: '#969696' });
+    } else if (tabs[tab[0].id].state === "safe") {
+      browser.browserAction.setBadgeBackgroundColor({ tabId: tab[0].id, color: '#0071bc' });
+    } else if (tabs[tab[0].id].state === "dangerous") {
+      browser.browserAction.setBadgeBackgroundColor({ tabId: tab[0].id, color: '#ff0400' });
     }
   });
-  return match;
+}
+
+function getDomainFromURL(url) {
+  return (new URL(url)).hostname;
+}
+
+function domainInArray(currentDomain, arr) {
+  return arr.some(function (domain) {    
+    return currentDomain === domain || currentDomain.endsWith('.' + domain);
+  });
 }
