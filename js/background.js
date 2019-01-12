@@ -41,17 +41,14 @@ browser.webRequest.onBeforeRequest.addListener(
 
       if (domainInArray(domain, whitelist)) {
         tabs[request.tabId] = { state: "safe" };
-      } else if (domainInArray(domain, blacklist) || bypassDomains.includes(domain)) {
+      } else if (domainInArray(domain, blacklist) ||
+        bypassDomains.includes(domain) ||
+        isWarningPage) {
         tabs[request.tabId] = { state: "dangerous" }
-        tabs[request.tabId].url = request.url;
-        if (!bypassDomains.includes(domain)) {
+        if (!bypassDomains.includes(domain) && !isWarningPage) {
           return {
-            redirectUrl: browser.extension.getURL("../warning.html")
+            redirectUrl: browser.extension.getURL("../warning.html") + "?url=" + request.url
           }
-        }
-      } else if (isWarningPage) {
-        if (!tabs[request.tabId].state) {
-          tabs[request.tabId].state = "dangerous";
         }
       } else {
         tabs[request.tabId] = { state: "unknown" };
@@ -64,8 +61,10 @@ browser.webRequest.onBeforeRequest.addListener(
 browser.runtime.onMessage.addListener((request) => {
   if (request.bypassDomain) {
     browser.tabs.query({ active: true }, function (tab) {
-      bypassDomains.push(getDomainFromURL(tabs[tab[0].id].url));
-      chrome.tabs.update(tab[0].id, { url: tabs[tab[0].id].url });
+      let url = tab[0].url.split("?url=", 2)[1];
+      let domain = getDomainFromURL(url);
+      bypassDomains.push(domain);
+      chrome.tabs.update(tab[0].id, { url: url });
     });
   }
 });
@@ -99,7 +98,7 @@ function getDomainFromURL(url) {
 }
 
 function domainInArray(currentDomain, arr) {
-  return arr.some(function (domain) {    
+  return arr.some(function (domain) {
     return currentDomain === domain || currentDomain.endsWith('.' + domain);
   });
 }
