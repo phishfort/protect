@@ -36,7 +36,7 @@ var result = {};
 browser.webRequest.onBeforeRequest.addListener(
   (request) => {
     if (request.tabId >= 0) {
-      let isWarningPage = request.url.startsWith(browser.extension.getURL("../warning.html"));
+      let isWarningPage = request.url.startsWith(browser.extension.getURL("../html/warning.html"));
       let domain = getDomainFromURL(request.url);
 
       if (domainInArray(domain, whitelist)) {
@@ -47,7 +47,7 @@ browser.webRequest.onBeforeRequest.addListener(
         tabs[request.tabId] = { state: "dangerous" }
         if (!bypassDomains.includes(domain) && !isWarningPage) {
           return {
-            redirectUrl: browser.extension.getURL("../warning.html") + "?url=" + request.url
+            redirectUrl: browser.extension.getURL("../html/warning.html") + "?url=" + request.url
           }
         }
       } else {
