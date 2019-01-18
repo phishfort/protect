@@ -1,2 +1,2 @@
 # PhishFort | Protect
-Anti-Phishing Chrome Plugin
+Anti-Phishing browser plugin built and maintained by PhishFort.

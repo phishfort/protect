@@ -1,8 +1,10 @@
 'use strict';
 
-const browser = window.msBrowser || window.browser || window.chrome;
+const browser = window.chrome || window.msBrowser || window.browser;
+
+
 const tabs = {};
-let blacklist, whitelist;
+var blacklist, whitelist;
 let bypassWarning = false;
 let bypassDomains = [];
 
@@ -60,41 +62,41 @@ browser.webRequest.onBeforeRequest.addListener(
 
 browser.runtime.onMessage.addListener((request) => {
   if (request.bypassDomain) {
-    browser.tabs.query({ active: true }, function (tab) {
-      let url = tab[0].url.split("?url=", 2)[1];
+    browser.tabs.query({ active: true }, function (tabs) {
+      let tabIndex = tabs.findIndex(tab => tab.url.includes(request.url));
+      let url = tabs[tabIndex].url.split("?url=", 2)[1];
       let domain = getDomainFromURL(url);
+
       bypassDomains.push(domain);
-      chrome.tabs.update(tab[0].id, { url: url });
+      browser.tabs.update(tabs[tabIndex].id, { url: url });
     });
   }
 });
 
-browser.tabs.onCreated.addListener(function (tabId, changeInfo, tab) {
-  updateIcon();
-});
-
-browser.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
-  updateIcon();
-});
-
 browser.tabs.onCreated.addListener(function (tab) {
-  updateIcon();
+  updateIcon(tab.id);
 });
 
-function updateIcon() {
-  browser.tabs.query({ active: true }, function (tab) {
-    if (tabs[tab[0].id] == null || tabs[tab[0].id].state === "unknown") {
-      browser.browserAction.setBadgeBackgroundColor({ tabId: tab[0].id, color: '#969696' });
-    } else if (tabs[tab[0].id].state === "safe") {
-      browser.browserAction.setBadgeBackgroundColor({ tabId: tab[0].id, color: '#0071bc' });
-    } else if (tabs[tab[0].id].state === "dangerous") {
-      browser.browserAction.setBadgeBackgroundColor({ tabId: tab[0].id, color: '#ff0400' });
-    }
-  });
+browser.tabs.onActivated.addListener(function (tab) {
+  updateIcon(tab.id);
+});
+
+browser.tabs.onUpdated.addListener(function (tabId) {
+  updateIcon(tabId);
+});
+
+function updateIcon(tabId) {
+  if (tabs[tabId] == null || tabs[tabId].state === "unknown") {
+    browser.browserAction.setBadgeBackgroundColor({ tabId: tabId, color: '#969696' });
+  } else if (tabs[tabId].state === "safe") {
+    browser.browserAction.setBadgeBackgroundColor({ tabId: tabId, color: '#0071bc' });
+  } else if (tabs[tabId].state === "dangerous") {
+    browser.browserAction.setBadgeBackgroundColor({ tabId: tabId, color: '#ff0400' });
+  }
 }
 
 function getDomainFromURL(url) {
-  return (new URL(url)).hostname;
+  return (new URL(url)).hostname.replace(/^www\./,'');
 }
 
 function domainInArray(currentDomain, arr) {

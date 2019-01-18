@@ -6,6 +6,6 @@ window.onload = function (e) {
   let bypassButton = document.getElementById("bypassButton");
 
   bypassButton.addEventListener("click", function (event) {
-    browser.runtime.sendMessage({ bypassDomain: true });
+    browser.runtime.sendMessage({ bypassDomain: true, url: window.location.href });
   });
 };
