@@ -335,6 +335,19 @@ body{
     margin-top:-40px;
 }
 
+.twitter-icon {
+    max-width: 25px;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.center {
+    display: block;
+    margin: auto;
+}
+
 @media screen and (max-width:385px){
   .title-sec > h2 {
       font-size: 20px;
