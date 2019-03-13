@@ -3,7 +3,7 @@ const browser = window.msBrowser || window.browser || window.chrome;
 browser.runtime.sendMessage({ popup: true });
 
 function getVersion() {
-  var details = browser.app.getDetails();
+  var details = browser.runtime.getManifest();
   return details.version;
 }
 
