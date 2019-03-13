@@ -3,7 +3,7 @@
   "name": "PhishFort | Protect",
   "short_name": "PhishFort | Protect",
   "description": "Protect against phishing attacks targeting crypto users.",
-  "version": "0.0.4.3",
+  "version": "0.0.4.4",
   "author": "PhishFort",
   "browser_action": {
     "default_icon": "img/tab-icon.png",
@@ -22,7 +22,6 @@
   "web_accessible_resources": [
     "html/warning.html"
   ],
-  "content_security_policy": "script-src 'self' https://www.google.com https://www.gstatic.com; object-src 'self';",
   "permissions": [
     "tabs",
     "webRequest",

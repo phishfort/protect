@@ -16,6 +16,22 @@ var blacklist, whitelist;
 let bypassWarning = false;
 let bypassDomains = [];
 
+
+function getVersion() {
+  var details = browser.app.getDetails();
+  return details.version;
+}
+
+function hasAccepted() {
+  let currVersion = getVersion();
+  let prevVersion = localStorage['protect-privacy-version']
+
+  if (currVersion != prevVersion) {
+    return false;
+  }
+  return true;
+}
+
 updateBlacklist();
 setInterval(function () {
   updateBlacklist();
@@ -127,4 +143,6 @@ browser.tabs.onActivated.addListener(function (tab) {
 browser.tabs.onUpdated.addListener(function (tabId) {
   updateIcon(tabId);
 });
+
+
 

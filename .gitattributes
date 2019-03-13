@@ -1,0 +1,3 @@
+./js/jquery-3.3.1.min.js -text
+./js/popper.min.js -text
+./js/bootstrap.min.js -text

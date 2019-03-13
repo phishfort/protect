@@ -19,33 +19,42 @@ background.whitelist.forEach(function (item) {
   list.appendChild(option);
 });
 
-function recaptchaCallback(data) {
+document.getElementById("reportButton").addEventListener("click", function () {
+  recaptchaCallback()
+});
+
+function recaptchaCallback() {
   var url = document.getElementById("maliciousSite").value;
   var domain = getDNSNameFromURL(url);
-  
+
   document.getElementById("reportButton").classList.add("disabled");
 
-  $.post("https://us-central1-plugin-recaptcha.cloudfunctions.net/validate-captcha", { url: url, malicious: domain, target: getDNSNameFromURL(document.getElementById("target").value), comment: document.getElementById("comment").value, captcha: data },
-    function (returnedData) {
+  $.post("https://us-central1-plugin-recaptcha.cloudfunctions.net/userReport",
+    {
+      url: url, malicious: domain,
+      target: getDNSNameFromURL(document.getElementById("target").value),
+      comment: document.getElementById("comment").value
+    })
+    .done(function () {
       window.location.replace("success.html");
     })
     .fail(function (xhr, status, error) {
-      recaptchaError();
+      window.location.replace("error.html");
     });
-}
-
-function recaptchaError() {
-  window.location.replace("error.html");
 };
+
+// function recaptchaError() {
+//   window.location.replace("error.html");
+// };
 
 function getDNSNameFromURL(url) {
   if (url.startsWith("http://")) {
     url = url.replace("http://", "");
   } else if (url.startsWith("https://")) {
     url = url.replace("https://", "");
-  } 
+  }
 
-  if(url.indexOf("/") > -1) {
+  if (url.indexOf("/") > -1) {
     url = url.split("/")[0];
   }
 

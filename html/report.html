@@ -39,29 +39,26 @@
         <div class="mb-3">
           <h3>Report Phishing</h3>
         </div>
-        <form>
-          <div class="form-group">
-            <label for="exampleFormControlInput1">Malicious Site</label>
-            <input type="url" class="form-control" id="maliciousSite" placeholder="e.g. https://www.attacker.com"
-              required>
-            <!--<a href="#" id="reportCurrent"><span class="small pull-right">Report current site</span></a>-->
-          </div>
-          <div class="form-group">
-            <label for="target">Target Site</label>
-            <input class="inputStyle" list="targets" name="target" id="target" placeholder="e.g. https://www.myetherwallet.com">
-            <datalist id="targets">
-            </datalist>
-          </div>
-          <div class="form-group">
-            <label for="comment">Comment (Optional)</label>
-            <textarea autofocus class="form-control" style="resize: none;" id="comment" rows="3"></textarea>
-          </div>
+        <div class="form-group">
+          <label for="exampleFormControlInput1">Malicious Site</label>
+          <input type="url" class="form-control" id="maliciousSite" placeholder="e.g. https://www.attacker.com"
+            required>
+          <a href="#" id="reportCurrent"><span class="small pull-right">Report current site</span></a>
+        </div>
+        <div class="form-group">
+          <label for="target">Target Site</label>
+          <input class="inputStyle" list="targets" name="target" id="target" placeholder="e.g. https://www.myetherwallet.com">
+          <datalist id="targets">
+          </datalist>
+        </div>
+        <div class="form-group">
+          <label for="comment">Comment (Optional)</label>
+          <textarea autofocus class="form-control" style="resize: none;" id="comment" rows="3"></textarea>
+        </div>
 
-          <button id="reportButton" class="btn btn-primary pull-right g-recaptcha" data-sitekey="6LcZBHMUAAAAAG9xAi0mmd0LFF-2upIVrtP4eZSG"
-            data-callback="recaptchaCallback" data-error-callback="recaptchaError" data-badge="bottomleft">
-            Report
-          </button>
-        </form>
+        <button id="reportButton" class="btn btn-primary pull-right">
+          Report
+        </button>
       </div>
     </div>
     <footer class="page-footer font-small cyan darken-3 mt-5 mb-3">
@@ -74,7 +71,6 @@
     </footer>
 
     <script src="../js/report.js"></script>
-    <script src='https://www.google.com/recaptcha/api.js' async defer></script>
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="../js/jquery-3.3.1.min.js"></script>
     <script src="../js/popper.min.js"></script>
