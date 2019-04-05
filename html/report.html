@@ -37,23 +37,32 @@
     <div class="mainContent">
       <div class="container">
         <div class="mb-3">
-          <h3>Report Phishing</h3>
+          <h3>Report Scam</h3>
         </div>
         <div class="form-group">
-          <label for="exampleFormControlInput1">Malicious Site</label>
+          <label for="exampleFormControlInput1">Malicious Link</label>
           <input type="url" class="form-control" id="maliciousSite" placeholder="e.g. https://www.attacker.com"
             required>
           <a href="#" id="reportCurrent"><span class="small pull-right">Report current site</span></a>
         </div>
         <div class="form-group">
-          <label for="target">Target Site</label>
-          <input class="inputStyle" list="targets" name="target" id="target" placeholder="e.g. https://www.myetherwallet.com">
+          <label for="target">Target Brand</label>
+          <input class="inputStyle" list="targets" name="target" id="target" placeholder="e.g. myetherwallet.com">
           <datalist id="targets">
           </datalist>
         </div>
         <div class="form-group">
-          <label for="comment">Comment (Optional)</label>
-          <textarea autofocus class="form-control" style="resize: none;" id="comment" rows="3"></textarea>
+          <select id="typeDropdown" required>
+            <option disabled>Select Type</option>
+            <option value="domain">Website</option>
+            <option value="app:playstore">Play Store App</option>
+            <option value="app:appstore">App Store App</option>
+            <option value="twitter:account">Twitter Account</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="comment">Comment <span class="small">(Optional)</span></label>
+          <textarea autofocus class="form-control" style="resize: none;" id="comment" rows="1"></textarea>
         </div>
 
         <button id="reportButton" class="btn btn-primary pull-right">
@@ -61,7 +70,7 @@
         </button>
       </div>
     </div>
-    <footer class="page-footer font-small cyan darken-3 mt-5 mb-3">
+    <footer class="page-footer font-small cyan darken-3 mt-4 mb-3">
       <a href="https://twitter.com/phishfort" target="_blank">
         <img class="twitter-icon center" src="../img/twitter.svg">
       </a>

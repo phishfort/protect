@@ -2,7 +2,7 @@
 
 const browser = window.chrome || window.msBrowser || window.browser;
 
-const SAFE_COLOR = "#0071bc";
+const SAFE_COLOR = "#17Bf63";
 const SAFE_LABEL = "Safe";
 
 const UNKNOWN_COLOR = "#969696";
@@ -12,31 +12,34 @@ const DANGEROUS_COLOR = "#ff0400";
 const DANGEROUS_LABEL = "Dangerous";
 
 const tabs = {};
-var blacklist, whitelist;
+var blacklist, whitelist, twitterWhitelist;
 let bypassWarning = false;
 let bypassDomains = [];
 
-updateBlacklist();
+updateBlacklists();
 setInterval(function () {
-  updateBlacklist();
+  updateBlacklists();
 }, 5 * 60 * 1000);
 
-updateWhitelist();
+updateWhitelists();
 setInterval(function () {
-  updateWhitelist();
+  updateWhitelists();
   bypassDomains = [];
-}, 24 * 60 * 60 * 1000);
+}, 1 * 60 * 60 * 1000);
 
 browser.browserAction.setBadgeText({ text: ' ' });
 browser.browserAction.setBadgeBackgroundColor({ color: UNKNOWN_COLOR });
 
-function updateBlacklist() {
+function updateBlacklists() {
   $.getJSON("https://raw.githubusercontent.com/phishfort/phishfort-lists/master/blacklists/domains.json", function (data) {
     blacklist = data;
   });
 }
 
-function updateWhitelist() {
+function updateWhitelists() {
+  $.getJSON("https://raw.githubusercontent.com/phishfort/phishfort-lists/master/whitelists/twitter.json", function (data) {
+    twitterWhitelist = data;
+  });
   $.getJSON("https://raw.githubusercontent.com/phishfort/phishfort-lists/master/whitelists/domains.json", function (data) {
     whitelist = data;
   });
@@ -67,7 +70,7 @@ browser.webRequest.onBeforeRequest.addListener(
     urls: ['<all_urls>'], types: ['main_frame']
   }, ['blocking', 'requestBody']);
 
-browser.runtime.onMessage.addListener((request) => {
+browser.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.bypassDomain) {
     browser.tabs.query({ currentWindow: true, active: true }, function (tabs) {
       let url = tabs[0].url.split("?url=", 2)[1];
@@ -76,11 +79,13 @@ browser.runtime.onMessage.addListener((request) => {
       bypassDomains.push(domain);
       browser.tabs.update(tabs[0].id, { url: url });
     });
-  }
-  if (request.popup) {
+  } else if (request.popup) {
     browser.tabs.query({ currentWindow: true, active: true }, function (tabs) {
       updateIcon(tabs[0].id);
     });
+  } 
+  else if (request.twitterLists) {
+    sendResponse({ whitelist: twitterWhitelist });
   }
 });
 
@@ -127,6 +132,3 @@ browser.tabs.onActivated.addListener(function (tab) {
 browser.tabs.onUpdated.addListener(function (tabId) {
   updateIcon(tabId);
 });
-
-
-

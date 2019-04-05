@@ -9,3 +9,4 @@ window.onload = function (e) {
     browser.runtime.sendMessage({ bypassDomain: true, url: window.location.href });
   });
 };
+console.log(browser, "browser")
