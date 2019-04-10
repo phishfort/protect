@@ -1,6 +1,6 @@
 const browser = window.msBrowser || window.browser || window.chrome;
 
-browser.runtime.sendMessage({ popup: true });
+browser.runtime.sendMessage({ func: "popup" });
 
 function getVersion() {
   var details = browser.runtime.getManifest();
@@ -30,5 +30,5 @@ let acceptButton = document.getElementById("acceptButton");
 
 acceptButton.onclick = function (element) {
   localStorage['protect-privacy-version'] = getVersion();
-  window.location.href="/html/index.html";
+  window.location.href = "/html/index.html";
 };

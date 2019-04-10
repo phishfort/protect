@@ -1,14 +1,14 @@
 var whitelist = [];
 
 function getWhitelist() {
-  chrome.runtime.sendMessage({ twitterLists: true }, function (res) {
+  chrome.runtime.sendMessage({ func: "twitterLists" }, function (res) {
     whitelist = res.whitelist;
   });
 }
 
 function addBadges() {
   let links = document.links;
-  
+
   for (var i = 0; i < links.length; i++) {
     let link = links[i];
     let username = link.getAttribute("href").replace("/", "").toLowerCase();
@@ -17,7 +17,7 @@ function addBadges() {
         var icon = document.createElement("img");
         icon.src = chrome.runtime.getURL('/img/twitter-whitelisted.png');
         icon.style = "padding-left:3px;display:inline;height:15px;width:15px;left:15px;";
-        icon.title = "PhishFort has categorized this user as safe";
+        icon.title = `@${username} is a PhishFort verified user`;
         link.appendChild(icon);
         link.setAttribute("phishfort-tagged", 1);
 
@@ -51,9 +51,12 @@ function setupObserver() {
     obj.addEventListener('DOMNodeInserted', addBadges, false);
     obj.addEventListener('DOMNodeRemoved', addBadges, false);
   }
-
 }
 
-getWhitelist();
-addBadges();
-setupObserver();
+chrome.runtime.sendMessage({ func: "twitterEnabled" }, function (res) {
+  if (res) {
+    getWhitelist();
+    addBadges();
+    setupObserver();
+  }
+});
