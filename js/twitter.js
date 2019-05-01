@@ -14,14 +14,16 @@ function addBadges() {
     let username = link.getAttribute("href").replace("/", "").toLowerCase();
     if (whitelist.some(item => item.toLowerCase() === username) && !link.getAttribute("phishfort-tagged")) {
       if (link.innerHTML.indexOf("@") > -1) {
-        var icon = document.createElement("img");
-        icon.src = chrome.runtime.getURL('/img/twitter-whitelisted.png');
-        icon.style = "padding-left:3px;display:inline;height:15px;width:15px;left:15px;";
-        icon.title = `@${username} is a PhishFort verified user`;
-        link.appendChild(icon);
-        link.setAttribute("phishfort-tagged", 1);
-
-        // link.setAttribute("style", "color: #17Bf63 !important");
+        console.log(link.parentElement.innerHTML, link.parentElement.innerHTML.includes("Replying to"));
+        if (!link.parentElement.innerHTML.includes("Replying to")) {
+          var icon = document.createElement("img");
+          icon.src = chrome.runtime.getURL('/img/twitter-whitelisted.png');
+          icon.style = "padding-left:3px;display:inline;height:15px;width:15px;left:15px;";
+          icon.title = `@${username} is a PhishFort verified user`;
+          link.appendChild(icon);
+          link.setAttribute("phishfort-tagged", 1);
+          // link.setAttribute("style", "color: #17Bf63 !important");
+        }
       }
     }
   }

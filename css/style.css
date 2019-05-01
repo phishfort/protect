@@ -288,24 +288,14 @@ h1, h2, h3, h4, h5, h6, p {
 
 .inputStyle {
   box-shadow: none;
-  height: 50px;
+  height: 40px !important;
   padding: 10px 15px;
   margin: 0;
   border: 1px solid #e2e3e4;
   font-size: 16px;
-  border-radius: 5px;
+  border-radius: 0px;
   width: 100%;
-}
-
-.textphara {
-  padding: 0 20px;
-}
-
-.textphara>p {
-  color: #323232;
-  font-size: 17px;
-  font-weight: 600;
-  line-height: 22px;
+  line-height: 18.4px;
 }
 
 .logo img {
@@ -354,11 +344,6 @@ h1, h2, h3, h4, h5, h6, p {
 .tab-content.tabBottom {
   margin-top: 40px;
   padding-bottom: 30px;
-}
-
-.textphara>p {
-  font-size: 14px;
-  line-height: 20px;
 }
 
 .linkSection>h2 {
