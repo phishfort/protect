@@ -109,16 +109,20 @@ chrome.runtime.onMessageExternal.addListener(
           if (request.token && typeof request.token !== 'undefined') {
             localStorage["sessionID"] = request.token;
             localStorage["address"] = request.address;
+            console.log("login request:", request);
             sendResponse({ success: true });
           } else {
             sendResponse({ success: false });
           }
+          break;
         case "logout":
           delete localStorage["sessionID"];
           delete localStorage["address"];
-          sendResponse({success: true})
+          sendResponse({success: true});
+          break;
         case "getSession":
           sendResponse({ sessionID: localStorage["sessionID"], success: true });
+          break;
       }
     }
   });
