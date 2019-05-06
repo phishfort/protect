@@ -102,13 +102,22 @@ browser.runtime.onMessage.addListener((request, sender, sendResponse) => {
 });
 
 chrome.runtime.onMessageExternal.addListener(
-  function (request, sender, sendResponse) {
-    if (sender.url === 'https://www.phishfort.com/login' || true) {
-      if (request.token && typeof request.token !== 'undefined') {
-        localStorage["sessionID"] = request.token;
-        sendResponse({ success: true })
-      } else {
-        sendResponse({ success: false })
+  (request, sender, sendResponse) => {
+    if (sender.url === 'https://www.phishfort.com/login' || sender.url === 'https://www.phishfort.com/profile' || true) {
+      switch (request.func) {
+        case "login":
+          if (request.token && typeof request.token !== 'undefined') {
+            localStorage["sessionID"] = request.token;
+            localStorage["address"] = request.address;
+            sendResponse({ success: true });
+          } else {
+            sendResponse({ success: false });
+          }
+        case "logout":
+          delete localStorage["sessionID"];
+          delete localStorage["address"];
+        case "getSession":
+          sendResponse({ sessionID: localStorage["sessionID"] });
       }
     }
   });

@@ -25,8 +25,15 @@
         <div class="row">
           <div class="col">
             <div class="logo">
-              <a href="https://www.phishfort.com" target="_blank"><img src="../img/logo.png" alt="PhishFort"></a>
+              <a href="./index.html"><img src="../img/logo.png" alt="PhishFort"></a>
             </div>
+          </div>
+          <div class="col text-right">
+            <a href="https://www.phishfort.com/login" target="_blank" id="loginButton">
+              Login
+            </a>
+            <a href="https://www.phishfort.com/profile" target="_blank" id="profileButton">
+            </a>
           </div>
         </div>
       </div>
@@ -36,35 +43,29 @@
     <ul class="value-list" id="value-list">
     </ul>
 
-    <div class="row mt-3"></div>
-    <div class="col-xs-3 text-center">
-      <a href="report.html" title="Report a scam to the PhishFort team">
-          Report Scam
-      </a>
-    </d iv>
+    <a href="report.html">
+      <div title="Report a scam to the PhishFort team" class="chosen-value text-center" type="text">
+        Report Scam</div>
+    </a>
+
+
   </div>
 
-  <div class=" navbar-fixed-bottom"></div>
-  <footer class="page-footer font-small cyan darken-3">
-    <hr>
-    <div class="text-center small mt-2">
-      <a href="https://www.phishfort.com/login" target="_blank" id="loginButton">
-        Login
-      </a>
-      <a href="https://www.phishfort.com/profile" target="_blank" id="profileButton">
-        Logged in as 0x0
-      </a>
-    </div>
-    <div class="text-center small mt-3">
-      <a href="settings.html">
+
+  <footer class="page-footer font-small cyan darken-3 mt-3">
+    <a href="https://twitter.com/phishfort" target="_blank">
+      <img class="twitter-icon center" src="../img/twitter.svg">
+    </a>
+    <div class="text-center small mt-3 black-text">
+      <a href="settings.html" class="black-text">
         Settings
       </a>
       |
-      <a href="info.html">
+      <a href="info.html" class="black-text">
         About
       </a>
       |
-      <a href="privacy.html">
+      <a href="privacy.html" class="black-text">
         Privacy Policy
       </a>
     </div>
@@ -72,7 +73,6 @@
       <a href="https://www.phishfort.com" target="_blank">PhishFort</a>
     </div>
   </footer>
-  </div>
 
   <script src="../js/index.js"></script>
   <script src="../js/jquery-3.3.1.min.js"></script>

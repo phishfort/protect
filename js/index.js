@@ -33,7 +33,7 @@ whitelist.forEach(function (item) {
   li.style.background = `url(../img/favicons/${item}-favicon.png) no-repeat 22px 24px`;
   li.style.paddingLeft = "50px";
   li.value = item;
-  li.innerHTML = item;
+  li.innerText = item;
   list.appendChild(li);
 });
 
@@ -94,7 +94,7 @@ inputField.addEventListener('input', () => {
 let displayedIndex = 0;
 
 inputField.addEventListener('focus', e => {
-    inputField.placeholder = "";
+  inputField.placeholder = "";
 });
 
 inputField.addEventListener('focusout', e => {
@@ -164,3 +164,11 @@ if (typeof localStorage["sessionID"] !== 'undefined') {
 } else {
   document.getElementById("profileButton").remove()
 };
+
+if (typeof localStorage["address"] !== 'undefined') {
+  document.getElementById("profileButton").innerText = shortenAddress(localStorage["address"]);
+}
+
+function shortenAddress(address) {
+  return address.substring(0,4) + "..." + address.substring(address.length-2,address.length);
+}

@@ -17,7 +17,7 @@ function addBadges() {
         if (!link.parentElement.innerHTML.includes("Replying to")) {
           var icon = document.createElement("img");
           icon.src = chrome.runtime.getURL('/img/twitter-whitelisted.png');
-          icon.style = "padding-left:3px;display:inline;height:15px;width:15px;left:15px;";
+          icon.style = "padding-left:3px;display:inline;vertical-align:top;float:none;height:15px;width:15px;left:15px;";
           icon.title = `@${username} is a PhishFort verified user`;
           link.appendChild(icon);
           link.setAttribute("phishfort-tagged", 1);
@@ -27,7 +27,6 @@ function addBadges() {
     }
   }
 }
-
 
 function setupObserver() {
   let MutationObserver = window.MutationObserver || window.WebKitMutationObserver,

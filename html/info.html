@@ -25,13 +25,15 @@
         <div class="row">
           <div class="col">
             <div class="logo">
-              <a href="https://www.phishfort.com" target="_blank"><img src="../img/logo.png" alt="..."></a>
+              <a href="./index.html"><img src="../img/logo.png" alt="PhishFort"></a>
             </div>
           </div>
           <div class="col">
             <div class="menuIcon">
-              <a href="index.html">
-                <i class="fa fa-angle-left fa-lg" aria-hidden="true"></i>
+              <a href="https://www.phishfort.com/login" target="_blank" id="loginButton">
+                Login
+              </a>
+              <a href="https://www.phishfort.com/profile" target="_blank" id="profileButton">
               </a>
             </div>
           </div>
@@ -40,6 +42,15 @@
     </div>
     <div class="mainContent settingSec">
       <div class="container">
+        <div class="col-xs-12 mb-3">
+          <b>
+            How can I get in touch with you?
+          </b>
+          <p>
+            Follow us on Twitter <a href="https://www.phishfort.com/phishfort" target="_blank">@phishfort</a> or send an
+            email to hello@phishfort.com.
+          </p>
+        </div>
         <div class="col-xs-12 mb-3">
           <b>
             How do I get added to the whitelist?
@@ -77,22 +88,27 @@
             </ul>
           </p>
         </div>
+        <a href="./index.html" id="backButton">
+          <button class="btn btn-secondary pull-left">
+            Back
+          </button>
+        </a>
       </div>
     </div>
-    <footer class="page-footer font-small cyan darken-3">
+    <footer class="page-footer font-small cyan darken-3 mt-3">
       <a href="https://twitter.com/phishfort" target="_blank">
         <img class="twitter-icon center" src="../img/twitter.svg">
       </a>
-      <div class="text-center small mt-3">
-        <a href="settings.html">
+      <div class="text-center small mt-3 black-text">
+        <a href="settings.html" class="black-text">
           Settings
         </a>
         |
-        <a href="info.html">
+        <a href="info.html" class="black-text">
           About
         </a>
         |
-        <a href="privacy.html">
+        <a href="privacy.html" class="black-text">
           Privacy Policy
         </a>
       </div>
@@ -100,14 +116,13 @@
         <a href="https://www.phishfort.com" target="_blank">PhishFort</a>
       </div>
     </footer>
-  </div>
 
-  <script src="../js/info.js"></script>
+    <script src="../js/info.js"></script>
 
-  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-  <script src="../js/jquery-3.3.1.min.js"></script>
-  <script src="../js/popper.min.js"></script>
-  <script src="../js/bootstrap.min.js"></script>
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="../js/jquery-3.3.1.min.js"></script>
+    <script src="../js/popper.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
 </body>
 
 </html>

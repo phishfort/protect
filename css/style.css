@@ -524,3 +524,7 @@ ul {
   list-style-position: outside;
   margin-left: 20px;
 }
+
+.black-text {
+  color: black;
+}
