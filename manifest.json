@@ -23,7 +23,8 @@
     "matches": [
       "https://www.phishfort.com/login",
       "https://www.phishfort.com/profile",
-      "http://localhost:4000/login"
+      "http://localhost:4000/login",
+      "http://localhost:4000/profile"
     ]
   },
   "web_accessible_resources": [
