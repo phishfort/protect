@@ -116,8 +116,9 @@ chrome.runtime.onMessageExternal.addListener(
         case "logout":
           delete localStorage["sessionID"];
           delete localStorage["address"];
+          sendResponse({success: true})
         case "getSession":
-          sendResponse({ sessionID: localStorage["sessionID"] });
+          sendResponse({ sessionID: localStorage["sessionID"], success: true });
       }
     }
   });
