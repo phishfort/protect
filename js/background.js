@@ -101,6 +101,13 @@ browser.runtime.onMessage.addListener((request, sender, sendResponse) => {
   }
 });
 
+chrome.runtime.onMessageExternal.addListener(
+  function (request, sender, sendResponse) {
+    if (sender.url === 'https://www.phishfort.com/login' || true) {
+      localStorage["sessionID"] = request.token;
+    }
+  });
+
 function updateIcon(tabId) {
   if (tabs[tabId] == null || tabs[tabId].state === UNKNOWN_LABEL) {
     browser.browserAction.setBadgeBackgroundColor({ tabId: tabId, color: UNKNOWN_COLOR });

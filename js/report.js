@@ -7,6 +7,8 @@ let reportCurrent = document.getElementById("reportCurrent");
 let maliciousSite = document.getElementById("maliciousSite");
 let list = document.getElementById("targets");
 
+browser.runtime.sendMessage({ func: "popup" });
+
 reportCurrent.addEventListener('click', function () {
   browser.tabs.query({ currentWindow: true, active: true }, function (tabs) {
     maliciousSite.value = tabs[0].url;

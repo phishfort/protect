@@ -14,7 +14,6 @@ function addBadges() {
     let username = link.getAttribute("href").replace("/", "").toLowerCase();
     if (whitelist.some(item => item.toLowerCase() === username) && !link.getAttribute("phishfort-tagged")) {
       if (link.innerHTML.indexOf("@") > -1) {
-        console.log(link.parentElement.innerHTML, link.parentElement.innerHTML.includes("Replying to"));
         if (!link.parentElement.innerHTML.includes("Replying to")) {
           var icon = document.createElement("img");
           icon.src = chrome.runtime.getURL('/img/twitter-whitelisted.png');

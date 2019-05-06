@@ -16,20 +16,24 @@
 
 <body>
   <div class="pageContent">
+    <a href="#">
+      <div id="headerBar" class="header-bar">
+        <span id="statusPhrase">Unknown</span>
+      </div>
+    </a>
     <div class="header">
       <div class="container">
         <div class="row">
           <div class="col">
-            <div class="menuIcon pull-left">
-              <a href="index.html">
-                <i class="fa fa-arrow-left fa-lg" aria-hidden="true"></i>
-              </a>
+            <div class="logo">
+              <a href="https://www.phishfort.com" target="_blank"><img src="../img/logo.png" alt="..."></a>
             </div>
           </div>
           <div class="col">
-            <div class="logo">
-              <a href="https://www.phishfort.com" target="_blank"><img src="../img/phishfort-protect-01.png"
-                  alt="..."></a>
+            <div class="menuIcon">
+              <a href="index.html">
+                <i class="fa fa-angle-left fa-lg" aria-hidden="true"></i>
+              </a>
             </div>
           </div>
         </div>
@@ -37,14 +41,11 @@
     </div>
     <div class="mainContent">
       <div class="container">
-        <div class="mb-3">
-          <h3>Report Scam</h3>
-        </div>
-        <div class="form-group">
+        <div class="form-group pb-3">
           <label for="exampleFormControlInput1">Malicious Link</label>
-          <input type="url" class="form-control inputStyle" id="maliciousSite" placeholder="e.g. https://www.attacker.com"
-            required>
-          <a href="#" id="reportCurrent"><span class="small pull-right">Report current site</span></a>
+          <input type="url" class="form-control inputStyle" id="maliciousSite"
+            placeholder="e.g. https://www.attacker.com" required>
+          <a href="#" id="reportCurrent"><span class="small pull-right mt-1">Report current site</span></a>
         </div>
         <div class="form-group">
           <label for="target">Target Brand</label>
@@ -75,6 +76,19 @@
       <a href="https://twitter.com/phishfort" target="_blank">
         <img class="twitter-icon center" src="../img/twitter.svg">
       </a>
+      <div class="text-center small mt-3">
+        <a href="settings.html">
+          Settings
+        </a>
+        |
+        <a href="info.html">
+          About
+        </a>
+        |
+        <a href="privacy.html">
+          Privacy Policy
+        </a>
+      </div>
       <div class="footer-copyright text-center py-3 small">Copyright © 2019
         <a href="https://www.phishfort.com" target="_blank">PhishFort</a>
       </div>
