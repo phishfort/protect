@@ -104,7 +104,12 @@ browser.runtime.onMessage.addListener((request, sender, sendResponse) => {
 chrome.runtime.onMessageExternal.addListener(
   function (request, sender, sendResponse) {
     if (sender.url === 'https://www.phishfort.com/login' || true) {
-      localStorage["sessionID"] = request.token;
+      if (request.token && typeof request.token !== 'undefined') {
+        localStorage["sessionID"] = request.token;
+        sendResponse({ success: true })
+      } else {
+        sendResponse({ success: false })
+      }
     }
   });
 
