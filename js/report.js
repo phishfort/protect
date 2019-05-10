@@ -37,7 +37,8 @@ function recaptchaCallback() {
       incidentType: dropdown.options[dropdown.selectedIndex].value,
       url: url, malicious: domain,
       target: getDNSNameFromURL(document.getElementById("target").value),
-      comment: document.getElementById("comment").value
+      comment: document.getElementById("comment").value,
+      reportedBy: localStorage["address"] ? localStorage["address"] : "anonymous"
     })
     .done(function () {
       window.location.replace("success.html");
