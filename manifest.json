@@ -3,7 +3,7 @@
   "name": "PhishFort | Protect",
   "short_name": "PhishFort | Protect",
   "description": "Protect yourself from phishing attacks.",
-  "version": "0.8.2",
+  "version": "0.8.8",
   "author": "PhishFort",
   "browser_action": {
     "default_icon": "img/tab-icon.png",
@@ -17,6 +17,14 @@
     "scripts": [
       "js/jquery-3.3.1.min.js",
       "js/background.js"
+    ]
+  },
+  "externally_connectable": {
+    "matches": [
+      "https://www.phishfort.com/login",
+      "https://www.phishfort.com/profile",
+      "http://localhost:4000/login",
+      "http://localhost:4000/profile"
     ]
   },
   "web_accessible_resources": [

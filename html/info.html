@@ -15,20 +15,28 @@
 
 <body>
   <div class="pageContent">
+    <a href="#">
+      <div id="headerBar" class="header-bar">
+        <span id="statusPhrase">Unknown</span>
+      </div>
+    </a>
     <div class="header">
       <div class="container">
         <div class="row">
           <div class="col">
-            <div class="menuIcon pull-left">
-              <a href="index.html">
-                <i class="fa fa-arrow-left fa-lg" aria-hidden="true"></i>
-              </a>
+            <div class="logo">
+              <a href="./index.html"><img src="../img/logo.png" alt="PhishFort"></a>
             </div>
           </div>
           <div class="col">
-            <div class="logo">
-              <a target="_blank" href="https://www.phishfort.com"><img src="../img/phishfort-protect-01.png"
-                  alt="..."></a>
+            <div class="menuIcon">
+              <!--
+              <a href="https://www.phishfort.com/login" target="_blank" id="loginButton">
+                Login
+              </a>
+              <a href="https://www.phishfort.com/profile" target="_blank" id="profileButton">
+              </a>
+              -->
             </div>
           </div>
         </div>
@@ -36,6 +44,15 @@
     </div>
     <div class="mainContent settingSec">
       <div class="container">
+        <div class="col-xs-12 mb-3">
+          <b>
+            How can I get in touch with you?
+          </b>
+          <p>
+            Follow us on Twitter <a href="https://www.phishfort.com/phishfort" target="_blank">@phishfort</a> or send an
+            email to hello@phishfort.com.
+          </p>
+        </div>
         <div class="col-xs-12 mb-3">
           <b>
             How do I get added to the whitelist?
@@ -51,7 +68,7 @@
           </b>
           <p>
             Complete <a target="_blank"
-            href="https://docs.google.com/forms/d/1BnnauK1Pgp83qg2_43vHufta4ek_ZRHXAAfxdzywCgE/edit">this</a> form.
+              href="https://docs.google.com/forms/d/1BnnauK1Pgp83qg2_43vHufta4ek_ZRHXAAfxdzywCgE/edit">this</a> form.
             Alternatively contact hello@phishfort.com.
           </p>
         </div>
@@ -62,7 +79,7 @@
           </b>
           <p>
             There are many ways you can help the Protect project.
-            
+
             <ul class="info-list mt-2">
               <li>Report phishing attacks directly to PhishFort through the Protect plugin!</li>
               <li>As the <a target="_blank" href="https://github.com/phishfort/protect">project</a> is open-source,
@@ -73,28 +90,41 @@
             </ul>
           </p>
         </div>
-        <div class="col-xs-12 mb-3">
-          <p>
-            <a href="privacy.html"><b>Privacy Policy</b></a>
-          </p>
-        </div>
+        <a href="./index.html" id="backButton">
+          <button class="btn btn-secondary pull-left">
+            Back
+          </button>
+        </a>
       </div>
     </div>
-    <footer class="page-footer font-small cyan darken-3">
+    <footer class="page-footer font-small cyan darken-3 mt-3">
       <a href="https://twitter.com/phishfort" target="_blank">
         <img class="twitter-icon center" src="../img/twitter.svg">
       </a>
-
+      <div class="text-center small mt-3 black-text">
+        <a href="settings.html" class="black-text">
+          Settings
+        </a>
+        |
+        <a href="info.html" class="black-text">
+          About
+        </a>
+        |
+        <a href="privacy.html" class="black-text">
+          Privacy Policy
+        </a>
+      </div>
       <div class="footer-copyright text-center py-3 small">Copyright © 2019
         <a href="https://www.phishfort.com" target="_blank">PhishFort</a>
       </div>
     </footer>
-  </div>
 
-  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-  <script src="../js/jquery-3.3.1.min.js"></script>
-  <script src="../js/popper.min.js"></script>
-  <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/info.js"></script>
+
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="../js/jquery-3.3.1.min.js"></script>
+    <script src="../js/popper.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
 </body>
 
 </html>

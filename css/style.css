@@ -59,7 +59,7 @@ h1, h2, h3, h4, h5, h6, p {
 }
 
 .pageContent {
-  width: 400px !important;
+  width: 320px !important;
   margin: 0 auto;
   position: relative;
 }
@@ -67,7 +67,7 @@ h1, h2, h3, h4, h5, h6, p {
 .header {
   background: url("../img/header-background.png") no-repeat center;
   background-size: 100% 100%;
-  padding: 18px 5px;
+  padding: 12px 5px;
 }
 
 .header-bar {
@@ -100,7 +100,7 @@ h1, h2, h3, h4, h5, h6, p {
 }
 
 .warningPageFooter a {
-  color: black;
+  color: white;
 }
 
 .warningInfo {
@@ -126,6 +126,10 @@ h1, h2, h3, h4, h5, h6, p {
 
 .warningInfo a {
   color: red;
+}
+
+.redText {
+  color:red;
 }
 
 .info-page .header {
@@ -299,7 +303,7 @@ h1, h2, h3, h4, h5, h6, p {
 }
 
 .logo img {
-  width: 100%;
+  width: 150px;
 }
 
 .info-page .logo img {
@@ -444,15 +448,12 @@ input:checked+.slider:before {
   background-color: white;
   border: 3px solid transparent;
   transition: 0.3s ease-in-out;
-  border-top: 1px solid #8bb7ff;
-}
-
-.chosen-value-bottom {
-  border-bottom: 1px solid #8bb7ff;
+  border-bottom: 1px solid rgba(0, 0, 0, .1);
 }
 
 .chosen-value::-webkit-input-placeholder {
   color: black;
+  opacity: 1;
 }
 
 .chosen-value:hover {
@@ -470,6 +471,11 @@ input:checked+.slider:before {
 
 .chosen-value:focus::-webkit-input-placeholder, .chosen-value.open::-webkit-input-placeholder, .chosen-value:hover::-webkit-input-placeholder {
   color: white;
+}
+
+::-moz-placeholder {
+  /* Mozilla Firefox 19+ */
+  opacity: 1;
 }
 
 .value-list {
@@ -519,7 +525,16 @@ ul {
   border-color: #0071bc;
 }
 
+.btn-report:hover {
+  background-color: red;
+  border-color: red;
+}
+
 .info-list {
   list-style-position: outside;
   margin-left: 20px;
+}
+
+.black-text {
+  color: black;
 }

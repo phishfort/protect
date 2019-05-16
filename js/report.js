@@ -7,6 +7,8 @@ let reportCurrent = document.getElementById("reportCurrent");
 let maliciousSite = document.getElementById("maliciousSite");
 let list = document.getElementById("targets");
 
+browser.runtime.sendMessage({ func: "popup" });
+
 reportCurrent.addEventListener('click', function () {
   browser.tabs.query({ currentWindow: true, active: true }, function (tabs) {
     maliciousSite.value = tabs[0].url;
@@ -35,7 +37,8 @@ function recaptchaCallback() {
       incidentType: dropdown.options[dropdown.selectedIndex].value,
       url: url, malicious: domain,
       target: getDNSNameFromURL(document.getElementById("target").value),
-      comment: document.getElementById("comment").value
+      comment: document.getElementById("comment").value,
+      reportedBy: localStorage["address"] ? localStorage["address"] : "anonymous"
     })
     .done(function () {
       window.location.replace("success.html");
@@ -63,4 +66,19 @@ function getDNSNameFromURL(url) {
   let domain = url;
 
   return domain;
+}
+
+// if (typeof localStorage["sessionID"] !== 'undefined') {
+//   // authenticated
+//   document.getElementById("loginButton").remove()
+// } else {
+//   document.getElementById("profileButton").remove()
+// };
+
+if (typeof localStorage["address"] !== 'undefined') {
+  document.getElementById("profileButton").innerText = shortenAddress(localStorage["address"]);
+}
+
+function shortenAddress(address) {
+  return address.substring(0,4) + "..." + address.substring(address.length-2,address.length);
 }

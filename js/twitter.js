@@ -7,28 +7,53 @@ function getWhitelist() {
 }
 
 function addBadges() {
+  let usernames = contains('span', '@');
+
+  for (user of usernames) {
+    let username = user.textContent.toLowerCase().substring(1);
+    if (whitelist.some(item => item.toLowerCase() === username)) {
+      if (!user.getAttribute("phishfort-tagged") && !user.parentElement.getAttribute("phishfort-tagged")) {
+        var icon = document.createElement("img");
+        icon.src = chrome.runtime.getURL('/img/twitter-whitelisted.png');
+        icon.style = "padding-left:3px;display:inline;vertical-align:top;float:none;height:15px;width:15px;left:15px;";
+        icon.title = `@${username} is a PhishFort verified user`;
+        icon.setAttribute('phishfort-badge', true);
+        user.appendChild(icon);
+        user.setAttribute("phishfort-tagged", true);
+      }
+    }
+  }
+  removeReplyToBadges();
+}
+
+
+function removeReplyToBadges() {
   let links = document.links;
 
-  for (var i = 0; i < links.length; i++) {
-    let link = links[i];
-    let username = link.getAttribute("href").replace("/", "").toLowerCase();
-    if (whitelist.some(item => item.toLowerCase() === username) && !link.getAttribute("phishfort-tagged")) {
-      if (link.innerHTML.indexOf("@") > -1) {
-        console.log(link.parentElement.innerHTML, link.parentElement.innerHTML.includes("Replying to"));
-        if (!link.parentElement.innerHTML.includes("Replying to")) {
-          var icon = document.createElement("img");
-          icon.src = chrome.runtime.getURL('/img/twitter-whitelisted.png');
-          icon.style = "padding-left:3px;display:inline;height:15px;width:15px;left:15px;";
-          icon.title = `@${username} is a PhishFort verified user`;
-          link.appendChild(icon);
-          link.setAttribute("phishfort-tagged", 1);
-          // link.setAttribute("style", "color: #17Bf63 !important");
+  for (link of links) {
+    if (link.parentElement.innerText.includes("Replying to")) {
+      try {
+
+        let img = link.childNodes[0].childNodes[0].childNodes[0].childNodes[1];
+        let img2 = link.childNodes[0].childNodes[0].childNodes[1];
+
+        if (img.getAttribute('phishfort-badge')) {
+          img.setAttribute("style", "display:none");
+          img2.setAttribute("style", "display:none");
         }
+      } catch (error) {
+        // Failed to traverse 'reply to' structure
       }
     }
   }
 }
 
+function contains(selector, text) {
+  var elements = document.querySelectorAll(selector);
+  return [].filter.call(elements, function (element) {
+    return RegExp(text).test(element.textContent);
+  });
+}
 
 function setupObserver() {
   let MutationObserver = window.MutationObserver || window.WebKitMutationObserver,
@@ -41,13 +66,16 @@ function setupObserver() {
       childList: true,
       subtree: true
     };
+
     let observer = new MutationObserver(function (mutations) {
       if (mutations[0].addedNodes.length || mutations[0].removedNodes.length) {
         addBadges();
       }
     });
+
     observer.observe(target, config);
   }
+
   else if (eventListenerSupported) {
     let obj = document.getElementsByTagName('body')[0];
     obj.addEventListener('DOMNodeInserted', addBadges, false);
@@ -61,4 +89,22 @@ chrome.runtime.sendMessage({ func: "twitterEnabled" }, function (res) {
     addBadges();
     setupObserver();
   }
+});
+
+
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+  switch (request.func) {
+    case "clearTagged":
+      let tags = document.querySelectorAll('[phishfort-tagged]');
+      for (tag of tags) {
+        tag.removeAttribute("phishfort-tagged");
+      }
+      let existingBadges = document.querySelectorAll('[phishfort-badge]');
+      for (badge of existingBadges) {
+        badge.setAttribute("style", "display:none");
+      }
+      sendResponse({ success: true });
+      break;
+  }
+  return true;
 });

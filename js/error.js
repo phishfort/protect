@@ -1,20 +1,8 @@
-const browser = window.chrome || window.msBrowser || window.browser;
+'use strict';
 
-var twitterToggle = document.getElementById("twitterToggle");
+const browser = window.msBrowser || window.browser || window.chrome;
 
 browser.runtime.sendMessage({ func: "popup" });
-
-twitterToggle.addEventListener('change', function () {
-  if (this.checked) {
-    browser.runtime.sendMessage({ func: "enableTwitter", value: true });
-  } else {
-    browser.runtime.sendMessage({ func: "enableTwitter", value: false });
-  }
-});
-
-browser.runtime.sendMessage({ func: "twitterEnabled" }, function (res) {
-  twitterToggle.checked = res;
-});
 
 // if (typeof localStorage["sessionID"] !== 'undefined') {
 //   // authenticated
