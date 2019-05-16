@@ -100,7 +100,7 @@ h1, h2, h3, h4, h5, h6, p {
 }
 
 .warningPageFooter a {
-  color: black;
+  color: white;
 }
 
 .warningInfo {
@@ -126,6 +126,10 @@ h1, h2, h3, h4, h5, h6, p {
 
 .warningInfo a {
   color: red;
+}
+
+.redText {
+  color:red;
 }
 
 .info-page .header {
@@ -444,11 +448,12 @@ input:checked+.slider:before {
   background-color: white;
   border: 3px solid transparent;
   transition: 0.3s ease-in-out;
-  border-bottom: 1px solid rgba(0,0,0,.1);
+  border-bottom: 1px solid rgba(0, 0, 0, .1);
 }
 
 .chosen-value::-webkit-input-placeholder {
   color: black;
+  opacity: 1;
 }
 
 .chosen-value:hover {
@@ -466,6 +471,11 @@ input:checked+.slider:before {
 
 .chosen-value:focus::-webkit-input-placeholder, .chosen-value.open::-webkit-input-placeholder, .chosen-value:hover::-webkit-input-placeholder {
   color: white;
+}
+
+::-moz-placeholder {
+  /* Mozilla Firefox 19+ */
+  opacity: 1;
 }
 
 .value-list {

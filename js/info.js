@@ -4,12 +4,12 @@ const browser = window.msBrowser || window.browser || window.chrome;
 
 browser.runtime.sendMessage({ func: "popup" });
 
-if (typeof localStorage["sessionID"] !== 'undefined') {
-  // authenticated
-  document.getElementById("loginButton").remove()
-} else {
-  document.getElementById("profileButton").remove()
-};
+// if (typeof localStorage["sessionID"] !== 'undefined') {
+//   // authenticated
+//   document.getElementById("loginButton").remove()
+// } else {
+//   document.getElementById("profileButton").remove()
+// };
 
 if (typeof localStorage["address"] !== 'undefined') {
   document.getElementById("profileButton").innerText = shortenAddress(localStorage["address"]);

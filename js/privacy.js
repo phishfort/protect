@@ -33,12 +33,12 @@ acceptButton.onclick = function (element) {
   window.location.href = "/html/index.html";
 };
 
-if (typeof localStorage["sessionID"] !== 'undefined') {
-  // authenticated
-  document.getElementById("loginButton").remove()
-} else {
-  document.getElementById("profileButton").remove()
-};
+// if (typeof localStorage["sessionID"] !== 'undefined') {
+//   // authenticated
+//   document.getElementById("loginButton").remove()
+// } else {
+//   document.getElementById("profileButton").remove()
+// };
 
 if (typeof localStorage["address"] !== 'undefined') {
   document.getElementById("profileButton").innerText = shortenAddress(localStorage["address"]);

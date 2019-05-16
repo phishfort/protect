@@ -54,6 +54,9 @@ browser.webRequest.onBeforeRequest.addListener(
     if (request.tabId >= 0) {
       let isWarningPage = request.url.startsWith(browser.extension.getURL("html/warning.html"));
       let domain = getDomainFromURL(request.url);
+      if (domain === "twitter.com") {
+        return;
+      }
       if (domainInArray(domain, whitelist)) {
         tabs[request.tabId] = { state: SAFE_LABEL };
       } else if (domainInArray(domain, blacklist) ||
@@ -101,31 +104,30 @@ browser.runtime.onMessage.addListener((request, sender, sendResponse) => {
   }
 });
 
-chrome.runtime.onMessageExternal.addListener(
-  (request, sender, sendResponse) => {
-    if (sender.url === 'https://www.phishfort.com/login' || sender.url === 'https://www.phishfort.com/profile' || true) {
-      switch (request.func) {
-        case "login":
-          if (request.token && typeof request.token !== 'undefined') {
-            localStorage["sessionID"] = request.token;
-            localStorage["address"] = request.address;
-            console.log("login request:", request);
-            sendResponse({ success: true });
-          } else {
-            sendResponse({ success: false });
-          }
-          break;
-        case "logout":
-          delete localStorage["sessionID"];
-          delete localStorage["address"];
-          sendResponse({success: true});
-          break;
-        case "getSession":
-          sendResponse({ sessionID: localStorage["sessionID"], success: true });
-          break;
-      }
-    }
-  });
+// chrome.runtime.onMessageExternal.addListener(
+//   (request, sender, sendResponse) => {
+//     if (sender.url === 'https://www.phishfort.com/login' || sender.url === 'https://www.phishfort.com/profile' || true) {
+//       switch (request.func) {
+//         case "login":
+//           if (request.token && typeof request.token !== 'undefined') {
+//             localStorage["sessionID"] = request.token;
+//             localStorage["address"] = request.address;
+//             sendResponse({ success: true });
+//           } else {
+//             sendResponse({ success: false });
+//           }
+//           break;
+//         case "logout":
+//           delete localStorage["sessionID"];
+//           delete localStorage["address"];
+//           sendResponse({ success: true });
+//           break;
+//         case "getSession":
+//           sendResponse({ sessionID: localStorage["sessionID"], success: true });
+//           break;
+//       }
+//     }
+//   });
 
 function updateIcon(tabId) {
   if (tabs[tabId] == null || tabs[tabId].state === UNKNOWN_LABEL) {
@@ -161,14 +163,46 @@ function domainInArray(currentDomain, arr) {
   });
 }
 
+function checkTwitter(tabId, url) {
+  if (typeof url !== 'undefined') {
+    let domain = getDomainFromURL(url);
+
+    if (domain === "twitter.com") {
+      chrome.tabs.sendMessage(tabId, { func: "clearTagged" }, function (response) { });
+      if (twitterSafeDomain(url)) {
+        tabs[tabId] = { state: SAFE_LABEL };
+      } else {
+        tabs[tabId] = { state: UNKNOWN_LABEL };
+      }
+    }
+  }
+}
+
+function twitterSafeDomain(url) {
+  try {
+    let handle = url.match(/^https?:\/\/(mobile.|www\.)?twitter\.com\/(#!\/)?([^/]+)(\/\w+)*$/)[3];
+
+    return twitterWhitelist.some(function (safeHandle) {
+      return handle.toLowerCase() === safeHandle.toLowerCase();
+    });
+  } catch (error) {
+    console.log(error)
+    return false;
+  }
+}
+
 browser.tabs.onCreated.addListener(function (tab) {
+  checkTwitter(tab.id, tab.url);
   updateIcon(tab.id);
 });
 
 browser.tabs.onActivated.addListener(function (tab) {
+  checkTwitter(tab.id, tab.url);
   updateIcon(tab.id);
 });
 
-browser.tabs.onUpdated.addListener(function (tabId) {
+browser.tabs.onUpdated.addListener(function (tabId, changeInfo) {
+  checkTwitter(tabId, changeInfo.url);
   updateIcon(tabId);
 });
+
