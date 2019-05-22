@@ -158,9 +158,14 @@ function getDomainFromURL(url) {
 }
 
 function domainInArray(currentDomain, arr) {
-  return arr.some(function (domain) {
-    return currentDomain === domain || currentDomain.endsWith('.' + domain);
-  });
+  try {
+    return arr.some(function (domain) {
+      return currentDomain === domain || currentDomain.endsWith('.' + domain);
+    });
+  } catch (error) {
+    // List not fetched yet
+    return false;
+  }
 }
 
 function checkTwitter(tabId, url) {
@@ -205,4 +210,22 @@ browser.tabs.onUpdated.addListener(function (tabId, changeInfo) {
   checkTwitter(tabId, changeInfo.url);
   updateIcon(tabId);
 });
+
+function getVersion() {
+  var details = browser.runtime.getManifest();
+  return details.version;
+}
+
+function loadTutorial() {
+  //let currVersion = getVersion();
+  let completedTutorial = localStorage['phishfort-tutorial']
+
+  // first run
+  if (!completedTutorial) {
+    chrome.tabs.create({ url: "/html/start.html" });
+    localStorage['phishfort-tutorial'] = true;
+  }
+}
+
+loadTutorial()
 

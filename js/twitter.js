@@ -33,16 +33,31 @@ function removeReplyToBadges() {
   for (link of links) {
     if (link.parentElement.innerText.includes("Replying to")) {
       try {
-
         let img = link.childNodes[0].childNodes[0].childNodes[0].childNodes[1];
         let img2 = link.childNodes[0].childNodes[0].childNodes[1];
 
         if (img.getAttribute('phishfort-badge')) {
           img.setAttribute("style", "display:none");
+        }
+        if (img2.getAttribute('phishfort-badge')) {
           img2.setAttribute("style", "display:none");
         }
       } catch (error) {
-        // Failed to traverse 'reply to' structure
+        // Failed to parse new Twitter 'reply to' structure
+        // Try old Twitter structure
+        try {
+          let img = link.childNodes[0].childNodes[2];
+          let img2 = link.childNodes[0].childNodes[3];
+
+          if (img.getAttribute('phishfort-badge')) {
+            img.setAttribute("style", "display:none");
+          }
+          if (img2.getAttribute('phishfort-badge')) {
+            img2.setAttribute("style", "display:none");
+          }
+        } catch (error) {
+          // Unable to parse structure
+        }
       }
     }
   }

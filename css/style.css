@@ -58,7 +58,7 @@ h1, h2, h3, h4, h5, h6, p {
   margin: 0;
 }
 
-.pageContent {
+.page-content {
   width: 320px !important;
   margin: 0 auto;
   position: relative;
@@ -79,11 +79,11 @@ h1, h2, h3, h4, h5, h6, p {
   padding: 4px 0px 4px 0px
 }
 
-.warningContainer {
+.warning-container {
   max-width: 800px;
 }
 
-.warningPage {
+.warning-page {
   color: black;
   text-align: center;
   background-color: red;
@@ -93,17 +93,17 @@ h1, h2, h3, h4, h5, h6, p {
   height: 90vh;
 }
 
-.warningPageFooter {
+.warning-page-footer {
   height: 10vh;
   color: white;
   background-color: red;
 }
 
-.warningPageFooter a {
+.warning-page-footer a {
   color: white;
 }
 
-.warningInfo {
+.warning-info {
   background-color: rgb(236, 236, 236);
   padding: 30px;
   text-align: center;
@@ -112,91 +112,70 @@ h1, h2, h3, h4, h5, h6, p {
   box-shadow: 17px 15px 5px -9px rgba(0, 0, 0, 0.66);
 }
 
-.warningPage h2 {
+.warning-page h2 {
   padding-top: 15px;
   padding-bottom: 15px;
 }
 
-.warningPage p {
+.warning-page p {
   font-size: 16px;
   line-height: 28px;
   max-width: 500px;
   margin: 0 auto;
 }
 
-.warningInfo a {
+.warning-info a {
   color: red;
 }
 
-.redText {
-  color:red;
+.red-text {
+  color: red;
+}
+
+.tutorial-page {
+  color: black;
+  background-color: rgb(235, 235, 235);
+  min-height: 93vh;
+}
+
+.tutorial-container {
+  max-width: 1000px;
+}
+
+.tutorial-image {
+  max-width: 250px;
+  max-height: 250px;
+}
+
+.tutorial-image-large {
+  max-width: 600px;
+  max-height: 500px;
+}
+
+.tutorial-info {
+  background-color: rgb(255, 255, 255);
+  padding: 30px;
+  text-align: left;
+}
+
+.tutorial-banner img {
+  max-width: 250px;
 }
 
 .info-page .header {
   max-height: 80px;
 }
 
-.menuIcon {
-  text-align: right;
-}
-
-.mainContent {
+.main-content {
   padding: 25px 0;
 }
 
-.mainContent.settingSec {
+.main-content.setting-sec {
   padding: 30px 0;
-}
-
-.socialContent {
-  padding: 30px 0;
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  text-align: left;
-  left: 0;
-  right: 0;
-}
-
-.socialLink>ul>li {
-  display: inline-block;
-}
-
-.socialLink>ul>li+li {
-  padding-left: 15px;
-}
-
-.socialLink>ul>li>a {
-  font-size: 20px;
-  color: #969696;
-  -webkit-transition: all 300ms ease-in-out 0s;
-  -moz-transition: all 300ms ease-in-out 0s;
-  transition: all 300ms ease-in-out 0s;
-}
-
-.socialLink>ul>li>a:hover {
-  color: #0071bc;
 }
 
 .imgSec {
   margin-bottom: 30px;
-}
-
-.detailSec {
-  color: #0071bc;
-  font-size: 16px;
-  display: block;
-  text-decoration: underline;
-  margin: 40px 0 20px;
-  font-family: 'Conv_Avenir-LT-Std-55-Roman';
-  -webkit-transition: all 300ms ease-in-out 0s;
-  -moz-transition: all 300ms ease-in-out 0s;
-  transition: all 300ms ease-in-out 0s;
-}
-
-.detailSec:hover {
-  font-weight: 600;
-  text-decoration: underline;
 }
 
 .btnStyle {
@@ -311,6 +290,11 @@ h1, h2, h3, h4, h5, h6, p {
   max-width: 150px;
 }
 
+.drop-shadow {
+  -webkit-filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.2));
+  filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.2));
+}
+
 .safe-icon {
   background-color: #0071bc;
 }
@@ -326,6 +310,10 @@ h1, h2, h3, h4, h5, h6, p {
 .footer {
   height: 40px;
   margin-top: -40px;
+}
+
+.tutorial-footer {
+  background: rgb(235, 235, 235);
 }
 
 .twitter-icon {
@@ -355,7 +343,7 @@ h1, h2, h3, h4, h5, h6, p {
   margin: 20px 0 15px;
 }
 
-.mainContent {
+.main-content {
   padding: 30px 0;
 }
 
