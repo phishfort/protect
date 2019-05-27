@@ -4,9 +4,9 @@ Protect yourself from phishing attacks.
 
 🔑KEY FEATURES 🔑
 -----------------
-🌐Get notified when you are on a dangerous website. 
-✅See verified Twitter crypto-users. 
-👉Report dangerous websites, Twitter users, and mobile apps directly to the PhishFort team.
+- 🌐Get notified when you are on a dangerous website. 
+- ✅See verified Twitter crypto-users. 
+- 👉Report dangerous websites, Twitter users, and mobile apps directly to the PhishFort team.
 
 Why use Protect?
 -----------------
@@ -24,3 +24,5 @@ The plugin will indicate different colors depending on the website you're visiti
 - 💚 Green: Indicates that the domain is known and likely safe. For example, if you visit myetherwallet.com, the PhishFort Status Icon will glow blue. 
 - ⚪  Grey: The site hasn't been categorized. It's not necessarily unsafe, but proceed with caution! 
 - 🔴 Red: The site is most likely dangerous. If you visit myWetherwallet.com (a typosquatting attack), the plugin will notify you that you are on an unsafe site and you'll be sent back to safety. You're also able to bypass the warning if you need!
+
+We're always looking to make the plugin better. Please let us know if you have any suggestions or ideas.
