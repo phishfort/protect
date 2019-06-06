@@ -1,5 +1,7 @@
 var whitelist = [];
 
+console.log("Running Twitter monitoring")
+
 function getWhitelist() {
   chrome.runtime.sendMessage({ func: "twitterLists" }, function (res) {
     whitelist = res.whitelist;
@@ -15,7 +17,7 @@ function addBadges() {
       if (!user.getAttribute("phishfort-tagged") && !user.parentElement.getAttribute("phishfort-tagged")) {
         var icon = document.createElement("img");
         icon.src = chrome.runtime.getURL('/img/twitter-whitelisted.png');
-        icon.style = "padding-left:3px;display:inline;vertical-align:top;float:none;height:15px;width:15px;left:15px;";
+        icon.style = "padding-left:3px;display:inline;vertical-align:text-bottom;float:none;height:15px;width:15px;left:15px;";
         icon.title = `@${username} is a PhishFort verified user`;
         icon.setAttribute('phishfort-badge', true);
         user.appendChild(icon);
@@ -105,7 +107,6 @@ chrome.runtime.sendMessage({ func: "twitterEnabled" }, function (res) {
     setupObserver();
   }
 });
-
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   switch (request.func) {

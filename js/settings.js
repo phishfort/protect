@@ -1,8 +1,9 @@
 const browser = window.chrome || window.msBrowser || window.browser;
 
-var twitterToggle = document.getElementById("twitterToggle");
-
 browser.runtime.sendMessage({ func: "popup" });
+
+// Twitter
+var twitterToggle = document.getElementById("twitterToggle");
 
 twitterToggle.addEventListener('change', function () {
   if (this.checked) {
@@ -15,6 +16,22 @@ twitterToggle.addEventListener('change', function () {
 browser.runtime.sendMessage({ func: "twitterEnabled" }, function (res) {
   twitterToggle.checked = res;
 });
+
+// Blacklist
+var addressBlacklistToggle = document.getElementById("addressBlacklistToggle");
+
+addressBlacklistToggle.addEventListener('change', function () {
+  if (this.checked) {
+    browser.runtime.sendMessage({ func: "enableAddressBlacklist", value: true });
+  } else {
+    browser.runtime.sendMessage({ func: "enableAddressBlacklist", value: false });
+  }
+});
+
+browser.runtime.sendMessage({ func: "addressBlacklistEnabled" }, function (res) {
+  addressBlacklistToggle.checked = res;
+});
+
 
 // if (typeof localStorage["sessionID"] !== 'undefined') {
 //   // authenticated

@@ -15,7 +15,7 @@ const DANGEROUS_LABEL = "Dangerous";
 const DANGEROUS_TITLE = "This site is dangerous";
 
 const tabs = {};
-var blacklist, whitelist, twitterWhitelist;
+var blacklist, whitelist, twitterWhitelist, addressBlacklist;
 let bypassWarning = false;
 let bypassDomains = [];
 
@@ -30,12 +30,14 @@ setInterval(function () {
   bypassDomains = [];
 }, 1 * 60 * 60 * 1000);
 
-browser.browserAction.setBadgeText({ text: ' ' });
-browser.browserAction.setBadgeBackgroundColor({ color: UNKNOWN_COLOR });
+chrome.browserAction.setIcon({ path: "/img/tab-icon-unknown.png" });
 
 function updateBlacklists() {
   $.getJSON("https://raw.githubusercontent.com/phishfort/phishfort-lists/master/blacklists/domains.json", function (data) {
     blacklist = data;
+  });
+  $.getJSON("https://etherscamdb.info/api/addresses/", function (data) {
+    addressBlacklist = data.result;
   });
 }
 
@@ -95,12 +97,21 @@ browser.runtime.onMessage.addListener((request, sender, sendResponse) => {
     case "twitterLists":
       sendResponse({ whitelist: twitterWhitelist });
       break;
+    case "addressLists":
+      sendResponse({ blacklist: addressBlacklist });
+      break;
     case "enableTwitter":
       localStorage["twitter-enabled"] = request.value;
       break;
     case "twitterEnabled":
       sendResponse(JSON.parse(localStorage["twitter-enabled"]));
       break;
+    case "enableAddressBlacklist":
+        localStorage["address-blacklist-enabled"] = request.value;
+        break;
+    case "addressBlacklistEnabled":
+        sendResponse(JSON.parse(localStorage["address-blacklist-enabled"]));
+        break;
   }
 });
 
@@ -131,13 +142,13 @@ browser.runtime.onMessage.addListener((request, sender, sendResponse) => {
 
 function updateIcon(tabId) {
   if (tabs[tabId] == null || tabs[tabId].state === UNKNOWN_LABEL) {
-    browser.browserAction.setBadgeBackgroundColor({ tabId: tabId, color: UNKNOWN_COLOR });
+    browser.browserAction.setIcon({ path: "/img/tab-icon-unknown.png", tabId: tabId });
     updatePopup(UNKNOWN_LABEL, UNKNOWN_COLOR, UNKNOWN_TITLE);
   } else if (tabs[tabId].state === SAFE_LABEL) {
-    browser.browserAction.setBadgeBackgroundColor({ tabId: tabId, color: SAFE_COLOR });
+    browser.browserAction.setIcon({ path: "/img/tab-icon-safe.png", tabId: tabId });
     updatePopup(SAFE_LABEL, SAFE_COLOR, SAFE_TITLE);
   } else if (tabs[tabId].state === DANGEROUS_LABEL) {
-    browser.browserAction.setBadgeBackgroundColor({ tabId: tabId, color: DANGEROUS_COLOR });
+    browser.browserAction.setIcon({ path: "/img/tab-icon-dangerous.png", tabId: tabId });
     updatePopup(DANGEROUS_LABEL, DANGEROUS_COLOR, DANGEROUS_TITLE);
   }
 }
