@@ -3,7 +3,7 @@
   "name": "PhishFort | Protect",
   "short_name": "PhishFort | Protect",
   "description": "Protect yourself from phishing attacks.",
-  "version": "0.8.10",
+  "version": "0.9.0",
   "author": "PhishFort",
   "browser_action": {
     "default_icon": "img/tab-icon.png",
@@ -11,7 +11,7 @@
     "default_popup": "html/index.html"
   },
   "icons": {
-    "128": "img/tab-icon.png"
+    "128": "/img/tab-icon.png"
   },
   "background": {
     "scripts": [
@@ -27,7 +27,8 @@
   },
   "web_accessible_resources": [
     "html/warning.html",
-    "/img/twitter-whitelisted.png"
+    "html/modal.html",
+    "img/twitter-whitelisted.png"
   ],
   "permissions": [
     "tabs",
@@ -43,6 +44,16 @@
       ],
       "js": [
         "js/twitter.js"
+      ]
+    },
+    {
+      "run_at": "document_end",
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "js": [
+        "js/addressBlacklist.js"
       ]
     }
   ]

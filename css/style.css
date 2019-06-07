@@ -65,9 +65,12 @@ h1, h2, h3, h4, h5, h6, p {
 }
 
 .header {
-  background: url("../img/header-background.png") no-repeat center;
   background-size: 100% 100%;
-  padding: 12px 5px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  /*padding-left: 25px;*/
+  border-bottom:  1px solid rgba(0, 0, 0, .1);
+  background-color: #f3f3f3;
 }
 
 .header-bar {
@@ -107,9 +110,6 @@ h1, h2, h3, h4, h5, h6, p {
   background-color: rgb(236, 236, 236);
   padding: 30px;
   text-align: center;
-  -webkit-box-shadow: 17px 15px 5px -9px rgba(0, 0, 0, 0.66);
-  -moz-box-shadow: 17px 15px 5px -9px rgba(0, 0, 0, 0.66);
-  box-shadow: 17px 15px 5px -9px rgba(0, 0, 0, 0.66);
 }
 
 .warning-page h2 {
@@ -282,7 +282,7 @@ h1, h2, h3, h4, h5, h6, p {
 }
 
 .logo img {
-  width: 150px;
+  height: 30px;
 }
 
 .info-page .logo img {
