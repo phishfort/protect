@@ -14,6 +14,7 @@ function hasAccepted() {
   // first run
   if (currVersion != prevVersion) {
     localStorage["twitter-enabled"] = true;
+    localStorage["address-blacklist-enabled"] = true;
     return false;
   }
   return true;
