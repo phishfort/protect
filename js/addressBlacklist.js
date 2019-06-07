@@ -16,7 +16,8 @@ async function checkPage() {
 	for (var address in blacklist) {
 		if (blacklist.hasOwnProperty(address)) {
 			if ((
-				document.documentElement.innerText || document.documentElement.textContent.toLowerCase().toLowerCase()
+				//document.documentElement.innerText || document.documentElement.textContent.toLowerCase().toLowerCase()
+				document.documentElement.innerText
 			).indexOf(address.toLowerCase()) > -1) {
 				// Bad address
 				if (!modalOpen) {
