@@ -36,15 +36,12 @@ async function checkContent(content) {
 	for (var address in blacklist) {
 		if (blacklist.hasOwnProperty(address)) {
 			if (content.toLowerCase().indexOf(address.toLowerCase()) > -1) {
-				console.log("Found bad!")
 				// Bad address
 				if (!modalOpen) {
-					console.log("Open Modal")
 					await openModal();
 					modalOpen = true;
 				}
 				if (dangerousAddresses.indexOf(address) === -1) {
-					console.log("Inserting")
 					dangerousAddresses.push(address);
 					insertItem(address);
 				}
