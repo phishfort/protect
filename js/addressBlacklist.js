@@ -8,7 +8,7 @@ console.log("Running address blacklisting")
 async function getAddressWhitelist() {
 	chrome.runtime.sendMessage({ func: "addressLists" }, async function (res) {
 		blacklist = res.blacklist;
-		await checkPage();
+		setTimeout(await checkPage(), 3 * 1000);
 	});
 }
 
@@ -16,7 +16,7 @@ async function checkPage() {
 	for (var address in blacklist) {
 		if (blacklist.hasOwnProperty(address)) {
 			if ((
-				document.documentElement.textContent.toLowerCase() || document.documentElement.innerText.toLowerCase()
+				document.documentElement.innerText || document.documentElement.textContent.toLowerCase().toLowerCase()
 			).indexOf(address.toLowerCase()) > -1) {
 				// Bad address
 				if (!modalOpen) {
@@ -36,12 +36,15 @@ async function checkContent(content) {
 	for (var address in blacklist) {
 		if (blacklist.hasOwnProperty(address)) {
 			if (content.toLowerCase().indexOf(address.toLowerCase()) > -1) {
+				console.log("Found bad!")
 				// Bad address
 				if (!modalOpen) {
+					console.log("Open Modal")
 					await openModal();
 					modalOpen = true;
 				}
 				if (dangerousAddresses.indexOf(address) === -1) {
+					console.log("Inserting")
 					dangerousAddresses.push(address);
 					insertItem(address);
 				}
@@ -50,9 +53,6 @@ async function checkContent(content) {
 	}
 }
 
-
-
-
 var modalOpen, modalFetched = false;
 
 chrome.runtime.sendMessage({ func: "addressBlacklistEnabled" }, function (res) {
@@ -60,8 +60,6 @@ chrome.runtime.sendMessage({ func: "addressBlacklistEnabled" }, function (res) {
     window.addEventListener("load", start, false);
   }
 });
-
-
 
 function start(evt) {
 	getAddressWhitelist();
@@ -102,7 +100,6 @@ function openModal() {
 			}
 		}
 	}
-
 }
 
 function insertItem(address) {
@@ -113,6 +110,7 @@ function insertItem(address) {
 }
 
 document.addEventListener('copy', function (e) {
+	// This approach detects an empty string for Firefox inputs, so will not trigger
 	checkContent(window.getSelection().toString());
 });
 
