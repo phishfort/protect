@@ -2,12 +2,6 @@ var whitelist = [];
 
 console.log("Running Twitter monitoring")
 
-function getWhitelist() {
-  chrome.runtime.sendMessage({ func: "twitterLists" }, function (res) {
-    whitelist = res.whitelist;
-  });
-}
-
 function addBadges() {
   let usernames = contains('span', '@');
 
@@ -102,11 +96,18 @@ function setupObserver() {
 
 chrome.runtime.sendMessage({ func: "twitterEnabled" }, function (res) {
   if (res) {
-    getWhitelist();
+    getTwitterWhitelist();
     addBadges();
     setupObserver();
   }
 });
+
+function getTwitterWhitelist() {
+  chrome.runtime.sendMessage({ func: "twitterLists" }, function (res) {
+    whitelist = res.whitelist;
+  });
+}
+
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   switch (request.func) {

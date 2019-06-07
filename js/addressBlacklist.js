@@ -5,7 +5,7 @@ var dangerousAddresses = [];
 
 console.log("Running address blacklisting")
 
-async function getWhitelist() {
+async function getAddressWhitelist() {
 	chrome.runtime.sendMessage({ func: "addressLists" }, async function (res) {
 		blacklist = res.blacklist;
 		await checkPage();
@@ -64,7 +64,7 @@ chrome.runtime.sendMessage({ func: "addressBlacklistEnabled" }, function (res) {
 
 
 function start(evt) {
-	getWhitelist();
+	getAddressWhitelist();
 }
 
 function openModal() {
