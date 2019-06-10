@@ -112,34 +112,32 @@ browser.runtime.onMessage.addListener((request, sender, sendResponse) => {
     case "addressBlacklistEnabled":
         sendResponse(JSON.parse(localStorage["address-blacklist-enabled"]));
         break;
+
+    case "login":
+      if (request.token && typeof request.token !== 'undefined') {
+        localStorage["sessionID"] = request.token;
+        localStorage["address"] = request.address;
+        console.log("login request:", request);
+        sendResponse({ success: true });
+      } else {
+        sendResponse({ success: false });
+      }
+      break;
+    case "logout":
+      delete localStorage["sessionID"];
+      delete localStorage["address"];
+      sendResponse({success: true});
+      break;
+    case "getSession":
+      if (sender.url === 'https://www.phishfort.com/login' || sender.url === 'https://www.phishfort.com/profile'  || true /* TODO REMOVE THIS TRUE */){
+        sendResponse({ sessionID: localStorage["sessionID"], success: true });
+      }
+      else{
+        sendResponse({ success: false });
+      }
+      break;
   }
 });
-
-browser.runtime.onMessageExternal.addListener(
-  (request, sender, sendResponse) => {
-    if (sender.url === 'https://www.phishfort.com/login' || sender.url === 'https://www.phishfort.com/profile' || true) {
-      switch (request.func) {
-        case "login":
-          if (request.token && typeof request.token !== 'undefined') {
-            localStorage["sessionID"] = request.token;
-            localStorage["address"] = request.address;
-            console.log("login request:", request);
-            sendResponse({ success: true });
-          } else {
-            sendResponse({ success: false });
-          }
-          break;
-        case "logout":
-          delete localStorage["sessionID"];
-          delete localStorage["address"];
-          sendResponse({success: true});
-          break;
-        case "getSession":
-          sendResponse({ sessionID: localStorage["sessionID"], success: true });
-          break;
-      }
-    }
-  });
 
 function updateIcon(tabId) {
   if (tabs[tabId] == null || tabs[tabId].state === UNKNOWN_LABEL) {

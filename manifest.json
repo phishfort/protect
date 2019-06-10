@@ -22,7 +22,8 @@
   "externally_connectable": {
     "matches": [
       "https://www.phishfort.com/login",
-      "https://www.phishfort.com/profile"
+      "https://www.phishfort.com/profile",
+      "*://127.0.0.1/*"
     ]
   },
   "web_accessible_resources": [
@@ -54,6 +55,17 @@
       ],
       "js": [
         "js/addressBlacklist.js"
+      ]
+    },
+    {
+      "run_at": "document_end",
+      "matches": [
+        "https://www.phishfort.com/login",
+        "https://www.phishfort.com/profile",
+        "*://127.0.0.1/*"
+      ],
+      "js": [
+        "js/metamask.js"
       ]
     }
   ]
