@@ -9,10 +9,10 @@ function getVersion() {
 
 function hasAccepted() {
   // let currVersion = getVersion();
-  // let prevVersion = localStorage['protect-privacy-version']
+  let prevVersion = localStorage['protect-privacy-version']
   let acceptedTerms = localStorage['accepted-terms'];
 
-  if (acceptedTerms) {
+  if (acceptedTerms || prevVersion === "0.9.2.1" || prevVersion === "0.9.0") {
     return true;
   }
 
