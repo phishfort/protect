@@ -8,13 +8,18 @@ function getVersion() {
 }
 
 function hasAccepted() {
-  let currVersion = getVersion();
-  let prevVersion = localStorage['protect-privacy-version']
+  // let currVersion = getVersion();
+  // let prevVersion = localStorage['protect-privacy-version']
+  let acceptedTerms = localStorage['accepted-terms'];
 
-  if (currVersion != prevVersion) {
-    return false;
+  if (acceptedTerms) {
+    return true;
   }
-  return true;
+
+  // first run
+  localStorage["twitter-enabled"] = true;
+  localStorage["address-blacklist-enabled"] = true;
+  return false;
 }
 
 $(document).ready(function () {
@@ -29,7 +34,7 @@ $(document).ready(function () {
 let acceptButton = document.getElementById("acceptButton");
 
 acceptButton.onclick = function (element) {
-  localStorage['protect-privacy-version'] = getVersion();
+  localStorage['accepted-terms'] = true;
   window.location.href = "/html/index.html";
 };
 

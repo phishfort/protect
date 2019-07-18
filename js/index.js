@@ -8,16 +8,18 @@ function getVersion() {
 }
 
 function hasAccepted() {
-  let currVersion = getVersion();
-  let prevVersion = localStorage['protect-privacy-version']
+  // let currVersion = getVersion();
+  // let prevVersion = localStorage['protect-privacy-version']
+  let acceptedTerms = localStorage['accepted-terms'];
+
+  if (acceptedTerms) {
+    return true;
+  }
 
   // first run
-  if (currVersion != prevVersion) {
-    localStorage["twitter-enabled"] = true;
-    localStorage["address-blacklist-enabled"] = true;
-    return false;
-  }
-  return true;
+  localStorage["twitter-enabled"] = true;
+  localStorage["address-blacklist-enabled"] = true;
+  return false;
 }
 
 // privacy policy has not been accepted yet
@@ -171,5 +173,5 @@ if (typeof localStorage["address"] !== 'undefined') {
 }
 
 function shortenAddress(address) {
-  return address.substring(0,4) + "..." + address.substring(address.length-2,address.length);
+  return address.substring(0, 4) + "..." + address.substring(address.length - 2, address.length);
 }
