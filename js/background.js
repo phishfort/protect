@@ -107,11 +107,11 @@ browser.runtime.onMessage.addListener((request, sender, sendResponse) => {
       sendResponse(JSON.parse(localStorage["twitter-enabled"]));
       break;
     case "enableAddressBlacklist":
-        localStorage["address-blacklist-enabled"] = request.value;
-        break;
+      localStorage["address-blacklist-enabled"] = request.value;
+      break;
     case "addressBlacklistEnabled":
-        sendResponse(JSON.parse(localStorage["address-blacklist-enabled"]));
-        break;
+      sendResponse(JSON.parse(localStorage["address-blacklist-enabled"]));
+      break;
   }
 });
 
@@ -226,6 +226,25 @@ function getVersion() {
   var details = browser.runtime.getManifest();
   return details.version;
 }
+
+//////////////////////////////
+//////////////////////////////
+// Auto accept old user's PP to avoid double acceptance
+let prevVersion = localStorage['protect-privacy-version']
+let versions = prevVersion.split(".");
+let acceptedTerms = localStorage['accepted-terms'];
+
+if (!acceptedTerms && versions[1] == 9) {
+  if (versions[2] <= 3) {
+    updateBlacklists();
+    updateWhitelists();
+    localStorage['accepted-terms'] = true
+    localStorage["twitter-enabled"] = true;
+    localStorage["address-blacklist-enabled"] = true;
+  }
+}
+//////////////////////////////
+//////////////////////////////
 
 function loadTutorial() {
   //let currVersion = getVersion();

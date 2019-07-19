@@ -8,11 +8,9 @@ function getVersion() {
 }
 
 function hasAccepted() {
-  // let currVersion = getVersion();
-  let prevVersion = localStorage['protect-privacy-version']
   let acceptedTerms = localStorage['accepted-terms'];
 
-  if (acceptedTerms || prevVersion === "0.9.2.1" || prevVersion === "0.9.0") {
+  if (acceptedTerms) {
     return true;
   }
 
@@ -35,6 +33,7 @@ let acceptButton = document.getElementById("acceptButton");
 
 acceptButton.onclick = function (element) {
   localStorage['accepted-terms'] = true;
+  localStorage['protect-privacy-version'] = getVersion();
   window.location.href = "/html/index.html";
 };
 
@@ -50,5 +49,5 @@ if (typeof localStorage["address"] !== 'undefined') {
 }
 
 function shortenAddress(address) {
-  return address.substring(0,4) + "..." + address.substring(address.length-2,address.length);
+  return address.substring(0, 4) + "..." + address.substring(address.length - 2, address.length);
 }

@@ -15,10 +15,6 @@ function hasAccepted() {
   if (acceptedTerms) {
     return true;
   }
-
-  // first run
-  localStorage["twitter-enabled"] = true;
-  localStorage["address-blacklist-enabled"] = true;
   return false;
 }
 
