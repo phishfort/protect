@@ -32,7 +32,7 @@ function recaptchaCallback() {
   document.getElementById("reportButton").classList.add("disabled");
   let dropdown = document.getElementById("typeDropdown");
 
-  $.post("https://us-central1-plugin-recaptcha.cloudfunctions.net/userReport",
+  $.post("https://us-central1-counter-phishing.cloudfunctions.net/userReport",
     {
       incidentType: dropdown.options[dropdown.selectedIndex].value,
       url: url, malicious: domain,
