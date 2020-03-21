@@ -7,10 +7,15 @@ let reportCurrent = document.getElementById("reportCurrent");
 let maliciousSite = document.getElementById("maliciousSite");
 let list = document.getElementById("targets");
 
-browser.runtime.sendMessage({ func: "popup" });
+browser.runtime.sendMessage({
+  func: "popup"
+});
 
 reportCurrent.addEventListener('click', function () {
-  browser.tabs.query({ currentWindow: true, active: true }, function (tabs) {
+  browser.tabs.query({
+    currentWindow: true,
+    active: true
+  }, function (tabs) {
     maliciousSite.value = tabs[0].url;
   });
 }, false);
@@ -27,19 +32,24 @@ document.getElementById("reportButton").addEventListener("click", function () {
 
 function recaptchaCallback() {
   var url = document.getElementById("maliciousSite").value;
-  var domain = getDNSNameFromURL(url);
 
   document.getElementById("reportButton").classList.add("disabled");
   let dropdown = document.getElementById("typeDropdown");
+  let incident = {
+    incidentType: dropdown.options[dropdown.selectedIndex].value,
+    url: url,
+    target: getDNSNameFromURL(document.getElementById("target").value),
+    reportedBy: localStorage["address"] ? localStorage["address"] : "anonymous"
+  }
+  
+  let comment = document.getElementById("comment").value
+
+  if (comment.length) {
+    incident.comment = comment
+  }
 
   $.post("https://us-central1-counter-phishing.cloudfunctions.net/userReport",
-    {
-      incidentType: dropdown.options[dropdown.selectedIndex].value,
-      url: url, malicious: domain,
-      target: getDNSNameFromURL(document.getElementById("target").value),
-      comment: document.getElementById("comment").value,
-      reportedBy: localStorage["address"] ? localStorage["address"] : "anonymous"
-    })
+      incident)
     .done(function () {
       window.location.replace("success.html");
     })
@@ -80,5 +90,5 @@ if (typeof localStorage["address"] !== 'undefined') {
 }
 
 function shortenAddress(address) {
-  return address.substring(0,4) + "..." + address.substring(address.length-2,address.length);
+  return address.substring(0, 4) + "..." + address.substring(address.length - 2, address.length);
 }
