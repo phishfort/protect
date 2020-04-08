@@ -33,7 +33,9 @@ document.getElementById("reportButton").addEventListener("click", function () {
 function recaptchaCallback() {
   var url = document.getElementById("maliciousSite").value;
 
-  document.getElementById("reportButton").classList.add("disabled");
+  document.getElementById("loader").style.display = "block";
+  document.getElementById("loader-background").style.display = "block";
+  
   let dropdown = document.getElementById("typeDropdown");
   let incident = {
     incidentType: dropdown.options[dropdown.selectedIndex].value,

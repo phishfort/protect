@@ -526,3 +526,33 @@ ul {
 .black-text {
   color: black;
 }
+
+#loader-background {
+  display: none;
+  z-index: 1;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background: rgba(255,255,255,0.8);
+}
+
+#loader {
+  display: none;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 2;
+  width: 150px;
+  height: 150px;
+  margin: -75px 0 0 -75px;
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #0071bc;
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
