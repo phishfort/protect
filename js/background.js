@@ -14,6 +14,11 @@ const DANGEROUS_COLOR = "#ff0400";
 const DANGEROUS_LABEL = "Dangerous";
 const DANGEROUS_TITLE = "This site is dangerous";
 
+const LIST_BASE = "https://raw.githubusercontent.com/phishfort/phishfort-lists/master";
+const DOMAIN_BLACKLIST_URL  = `${LIST_BASE}/blacklists/domains.json`;
+const DOMAIN_WHITELIST_URL  = `${LIST_BASE}/whitelists/domains.json`;
+const TWITTER_WHITELIST_URL = `${LIST_BASE}/whitelists/twitter.json`;
+
 const tabs = {};
 var blacklist, whitelist, twitterWhitelist, addressBlacklist;
 let bypassWarning = false;
@@ -33,24 +38,23 @@ setInterval(function () {
 chrome.browserAction.setIcon({ path: "/img/tab-icon-unknown.png" });
 
 function updateBlacklists() {
-  $.getJSON("https://raw.githubusercontent.com/phishfort/phishfort-lists/master/blacklists/domains.json", function (data) {
-    blacklist = data;
-  });
-  $.getJSON("https://etherscamdb.info/api/addresses/", function (data) {
-    addressBlacklist = data.result;
+  fetch(DOMAIN_BLACKLIST_URL).then(async data => {
+    blacklist = await data.json();
+    console.info(`Retrieved Domain Blacklist: ${blacklist.length} items.`);
   });
 }
 
 function updateWhitelists() {
-  $.getJSON("https://raw.githubusercontent.com/phishfort/phishfort-lists/master/whitelists/twitter.json", function (data) {
-    twitterWhitelist = data;
+  fetch(DOMAIN_WHITELIST_URL).then(async data => {
+    whitelist = await data.json();
+    console.info(`Retrieved Domain Whitelist: ${whitelist.length} items.`);
   });
-  $.getJSON("https://raw.githubusercontent.com/phishfort/phishfort-lists/master/whitelists/domains.json", function (data) {
-    whitelist = data;
+  fetch(TWITTER_WHITELIST_URL).then(async data => {
+    twitterWhitelist = await data.json();
+    console.info(`Retrieved Twitter Whitelist: ${twitterWhitelist.length} items.`);
   });
 }
 
-var result = {};
 browser.webRequest.onBeforeRequest.addListener(
   (request) => {
     if (request.tabId >= 0) {
@@ -165,7 +169,11 @@ function updatePopup(text, color, title) {
 }
 
 function getDomainFromURL(url) {
-  return (new URL(url)).hostname.replace(/^www\./, '');
+  try {
+    return (new URL(url)).hostname.replace(/^www\./, '');
+  } catch (e) {
+    console.warn(`Attempt to construct URL from invalid input: ${url}`);
+  }
 }
 
 function domainInArray(currentDomain, arr) {
@@ -180,7 +188,9 @@ function domainInArray(currentDomain, arr) {
 }
 
 function checkTwitter(tabId, url) {
-  if (typeof url !== 'undefined') {
+  // Check that url is truthy, rather than undefined.
+  // This test will fail for empty strings.
+  if (url) {
     let domain = getDomainFromURL(url);
 
     if (domain === "twitter.com") {
@@ -231,10 +241,11 @@ function getVersion() {
 //////////////////////////////
 // Auto accept old user's PP to avoid double acceptance
 let prevVersion = localStorage['protect-privacy-version']
-let versions = prevVersion.split(".");
+// If this is a new install, localStorage will be empty and prevVersion will be undefined
+let versions = prevVersion && prevVersion.split(".");
 let acceptedTerms = localStorage['accepted-terms'];
 
-if (!acceptedTerms && versions[1] == 9) {
+if (!acceptedTerms && versions && versions[1] == 9) {
   if (versions[2] <= 3) {
     updateBlacklists();
     updateWhitelists();
