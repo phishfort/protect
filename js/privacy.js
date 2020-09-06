@@ -20,14 +20,12 @@ function hasAccepted() {
   return false;
 }
 
-$(document).ready(function () {
-  // privacy policy has not been accepted yet
-  if (hasAccepted()) {
-    document.getElementById("acceptButton").style.display = "none";
-  } else {
-    document.getElementById("backButton").style.display = "none";
-  }
-});
+// privacy policy has not been accepted yet
+if (hasAccepted()) {
+  document.getElementById("acceptButton").style.display = "none";
+} else {
+  document.getElementById("backButton").style.display = "none";
+}
 
 let acceptButton = document.getElementById("acceptButton");
 
