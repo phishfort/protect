@@ -2,6 +2,7 @@
 
 const browser = window.msBrowser || window.browser || window.chrome;
 const background = browser.extension.getBackgroundPage();
+const USER_REPORT_URL = "https://us-central1-counter-phishing.cloudfunctions.net/userReport";
 
 let reportCurrent = document.getElementById("reportCurrent");
 let maliciousSite = document.getElementById("maliciousSite");
@@ -50,14 +51,17 @@ function recaptchaCallback() {
     incident.comment = comment
   }
 
-  $.post("https://us-central1-counter-phishing.cloudfunctions.net/userReport",
-      incident)
-    .done(function () {
+  fetch(USER_REPORT_URL, {
+    method: "POST",
+    body: new URLSearchParams([...Object.entries(incident)])
+  }).then(response => {
+    if (response.ok) {
       window.location.replace("success.html");
-    })
-    .fail(function (xhr, status, error) {
+    } else {
       window.location.replace("error.html");
-    });
+    }
+  })
+
 };
 
 // function recaptchaError() {
